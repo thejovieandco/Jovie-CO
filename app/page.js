@@ -10,8 +10,13 @@ export default function Home() {
     <>
       <section className="hero">
         <div className="hero-photo-note">
-          <span>Editorial Photography — model in gold jewelry, soft natural light, marble &amp; silk</span>
-        </div>
+          <div className="hero-photo-note">
+  <img
+    src="/products/item-3.jpg"
+    alt="Jovie & Co jewelry"
+    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+  />
+</div>
         <div className="hero-content">
           <div className="hero-eyebrow">Coming Soon</div>
           <h1>Timeless Jewelry.<br />Crafted to Last.</h1>
