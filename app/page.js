@@ -10,13 +10,12 @@ export default function Home() {
     <>
       <section className="hero">
         <div className="hero-photo-note">
-          <div className="hero-photo-note">
-  <img
-    src="/products/item-3.jpg"
-    alt="Jovie & Co jewelry"
-    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-  />
-</div>
+          <img
+            src="/products/item-3.jpg"
+            alt="Jovie & Co jewelry"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        </div>
         <div className="hero-content">
           <div className="hero-eyebrow">Coming Soon</div>
           <h1>Timeless Jewelry.<br />Crafted to Last.</h1>
