@@ -98,7 +98,16 @@ export default function Home() {
           <Reveal>
             <div className="section-head">
               <div className="eyebrow">Community</div>
-              <h2>@jovieandco</h2>
+              <h2>
+                <a
+                  href="https://www.instagram.com/thejovieandco"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="insta-handle"
+                >
+                  @thejovieandco
+                </a>
+              </h2>
               <p>Follow along as the first collection comes to life.</p>
             </div>
           </Reveal>
@@ -112,9 +121,23 @@ export default function Home() {
             "clover-necklace-red.webp",
             "iridescent-butterfly-earrings.webp",
           ].map((img, i) => (
-            <div className="insta-tile" key={i}>
+            <a
+              className="insta-tile"
+              key={i}
+              href="https://www.instagram.com/thejovieandco"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Jovie & Co on Instagram"
+            >
               <img src={`/products/${img}`} alt="Jovie & Co jewelry" loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-            </div>
+              <span className="insta-overlay" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <circle cx="12" cy="12" r="4.2" />
+                  <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none" />
+                </svg>
+              </span>
+            </a>
           ))}
         </div>
       </section>

@@ -114,6 +114,15 @@ export default function RingSizingPage() {
             </li>
           </ul>
 
+          <figure className="info-figure">
+            <img
+              src="/guides/how-to-measure-ring-size.webp"
+              alt="Illustrated guide: wrap string or a strip of paper around the base of your finger, mark where the end meets, then lay it flat and measure the length in millimeters against a ruler."
+              loading="lazy"
+            />
+            <figcaption>The string method, step by step.</figcaption>
+          </figure>
+
           <div className="info-note">
             <strong>Tips for the best fit:</strong> measure at the end of the day when your
             fingers are at their largest, avoid measuring when your hands are cold, and

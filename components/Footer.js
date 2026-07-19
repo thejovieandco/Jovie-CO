@@ -8,6 +8,20 @@ export default function Footer() {
           <div className="footer-brand">
             <div className="logo-mark">Jovie &amp; Co</div>
             <p>Jewelry made to be passed down — crafted today, treasured for generations.</p>
+            <a
+              href="https://www.instagram.com/thejovieandco"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-social"
+              aria-label="Jovie & Co on Instagram"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4.2" />
+                <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none" />
+              </svg>
+              @thejovieandco
+            </a>
           </div>
           <div>
             <h4>Shop</h4>
