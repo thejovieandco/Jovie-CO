@@ -1,6 +1,6 @@
 import Stripe from "stripe";
 import { NextResponse } from "next/server";
-import { getProductByHandle } from "../../../lib/products";
+import { getProductByHandle, PREORDER, PREORDER_SHIP_DATE } from "../../../lib/products";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
   apiVersion: "2024-06-20",
@@ -29,7 +29,10 @@ export async function POST(request) {
         price_data: {
           currency: "usd",
           unit_amount: product.price,
-          product_data: { name: product.name },
+          product_data: {
+            name: product.name,
+            ...(PREORDER && { description: `Preorder — ships ${PREORDER_SHIP_DATE}` }),
+          },
         },
       };
     });

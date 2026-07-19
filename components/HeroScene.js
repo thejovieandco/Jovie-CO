@@ -53,15 +53,15 @@ export default function HeroScene() {
 
       <div className="container hero-3d-grid">
         <div className="hero-content hero-layer-text">
-          <div className="hero-eyebrow">The Founding Collection</div>
+          <div className="hero-eyebrow">Preorder Now — Ships July 28</div>
           <h1>Crafted Today.<br />Treasured for<br />Generations.</h1>
           <p>
             Every piece we make is designed to outlive the moment it marks —
             jewelry meant to be worn, loved, and one day passed on.
-            The founding collection has arrived.
+            Reserve yours now — the founding collection ships July 28.
           </p>
           <div className="hero-actions">
-            <a href="#preview" className="btn">Shop the Collection</a>
+            <a href="#preview" className="btn">Preorder the Collection</a>
             <a href="/pages/our-story" className="btn btn-outline">The Legacy</a>
           </div>
         </div>

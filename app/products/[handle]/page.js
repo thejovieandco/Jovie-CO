@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { products, getProductByHandle, formatPrice } from "../../../lib/products";
+import { products, getProductByHandle, formatPrice, PREORDER, PREORDER_SHIP_DATE } from "../../../lib/products";
 import AddToCartButton from "../../../components/AddToCartButton";
 
 export function generateStaticParams() {
@@ -38,10 +38,17 @@ export default function ProductPage({ params }) {
           </ul>
           {product.comingSoon ? (
             <p style={{ fontSize: 13, color: "#8a8880", letterSpacing: "0.05em", textTransform: "uppercase" }}>
-              Coming Soon — Available July 28
+              Coming Soon — Available {PREORDER_SHIP_DATE}
             </p>
           ) : (
-            <AddToCartButton handle={product.handle} />
+            <>
+              <AddToCartButton handle={product.handle} />
+              {PREORDER && (
+                <p style={{ fontSize: 13, color: "#A8823E", letterSpacing: "0.05em", textTransform: "uppercase", marginTop: 16 }}>
+                  Preorder — Ships {PREORDER_SHIP_DATE}
+                </p>
+              )}
+            </>
           )}
         </div>
       </div>
