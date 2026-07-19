@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-brand">
             <div className="logo-mark">Jovie &amp; Co</div>
-            <p>Timeless jewelry inspired by love, family, and the moments that matter most.</p>
+            <p>Jewelry made to be passed down — crafted today, treasured for generations.</p>
           </div>
           <div>
             <h4>Shop</h4>
@@ -21,7 +21,7 @@ export default function Footer() {
           <div>
             <h4>Company</h4>
             <ul>
-              <li><Link href="/#story">Our Story</Link></li>
+              <li><Link href="/pages/our-story">Our Story</Link></li>
               <li><Link href="/pages/sustainability">Sustainability</Link></li>
               <li><Link href="/pages/contact">Contact Us</Link></li>
             </ul>
@@ -37,7 +37,7 @@ export default function Footer() {
         </div>
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} Jovie &amp; Co. All rights reserved.</span>
-          <span>Crafted with love, for love.</span>
+          <span>Crafted today. Treasured for generations.</span>
         </div>
       </div>
     </footer>

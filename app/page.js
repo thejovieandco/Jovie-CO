@@ -2,75 +2,120 @@ import Link from "next/link";
 import { products } from "../lib/products";
 import ProductCard from "../components/ProductCard";
 import Newsletter from "../components/Newsletter";
+import HeroScene from "../components/HeroScene";
+import Reveal from "../components/Reveal";
+import Tilt3D from "../components/Tilt3D";
 
 export default function Home() {
   const preview = products;
 
   return (
     <>
-      <section className="hero">
-        <div className="hero-photo-note">
-          <img
-            src="/products/item-3.jpg"
-            alt="Jovie & Co jewelry"
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
-        </div>
-        <div className="hero-content">
-          <div className="hero-eyebrow">Coming Soon</div>
-          <h1>Timeless Jewelry.<br />Crafted to Last.</h1>
-          <p>
-            Inspired by love and designed to celebrate life's most meaningful moments.
-            Our first collection is on its way — here's an early look.
-          </p>
-          <a href="#preview" className="btn">See a Preview</a>
-        </div>
-      </section>
+      <HeroScene />
 
       <section className="section" id="preview">
         <div className="container">
-          <div className="section-head">
-            <div className="eyebrow">A First Look</div>
-            <h2>Coming to the Collection</h2>
-            <p>Pricing and full details are on the way — join the list below to be first to shop.</p>
-          </div>
+          <Reveal>
+            <div className="section-head">
+              <div className="eyebrow">A First Look</div>
+              <h2>The Founding Collection</h2>
+              <p>Eighteen pieces, each made to be kept. Pricing and full details are on the way — join the list below to be first to shop.</p>
+            </div>
+          </Reveal>
           <div className="grid-4">
-            {preview.map((p) => <ProductCard key={p.handle} product={p} />)}
+            {preview.map((p, i) => (
+              <Reveal key={p.handle} delay={(i % 4) * 90}>
+                <ProductCard product={p} />
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
       <div className="diamond-divider">
         <span className="line"></span>
-        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2 L22 9 L12 22 L2 9 Z" stroke="#C7A15A" strokeWidth="1.4" /></svg>
+        <svg className="diamond-spin" viewBox="0 0 24 24" fill="none"><path d="M12 2 L22 9 L12 22 L2 9 Z" stroke="#C7A15A" strokeWidth="1.4" /></svg>
         <span className="line"></span>
       </div>
 
       <section className="section" id="story">
         <div className="container story">
-          <div className="story-photo"><div className="ph-label">Photography — hands, marble, gold detail</div></div>
-          <div className="story-text">
-            <div className="eyebrow">Our Story</div>
-            <h2>Named for a Daughter<br />Not Yet Born</h2>
-            <p>
-              Jovie &amp; Co was created with one purpose — to craft timeless jewelry inspired by
-              love, family, and the moments that matter most. Named after our future daughter,
-              every piece is designed to become part of your story and be treasured for generations.
-            </p>
-            <Link href="/pages/our-story" className="btn btn-outline">Read Our Story</Link>
+          <Reveal>
+            <Tilt3D className="story-tilt" max={7}>
+              <div className="story-photo">
+                <img
+                  src="/products/twisted-marquise-ring.jpeg"
+                  alt="The Twisted Marquise Ring — the first piece of the Jovie & Co legacy"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </div>
+            </Tilt3D>
+          </Reveal>
+          <Reveal delay={140}>
+            <div className="story-text">
+              <div className="eyebrow">Our Story</div>
+              <h2>Built to Be<br />Passed Down</h2>
+              <p>
+                Jovie &amp; Co was founded on a simple belief — that the best things
+                we own should outlive us. Every piece we craft is the first chapter
+                of a longer story: worn today, remembered tomorrow, and handed to
+                the next generation as proof of where it all began.
+              </p>
+              <Link href="/pages/our-story" className="btn btn-outline">Read the Legacy</Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="section legacy-band">
+        <div className="container">
+          <Reveal>
+            <div className="section-head" style={{ marginBottom: 40 }}>
+              <div className="eyebrow" style={{ color: "var(--gold)" }}>The Jovie Standard</div>
+              <h2 style={{ color: "var(--white)" }}>What a Legacy Is Made Of</h2>
+            </div>
+          </Reveal>
+          <div className="grid-3 legacy-grid">
+            {[
+              { t: "Made to Last", d: "Materials chosen for decades of wear, not seasons of trend — plated, sealed, and finished to endure." },
+              { t: "Made to Mean", d: "Every design begins with a moment worth marking. A piece should say something long after the day it was given." },
+              { t: "Made to Pass On", d: "Timeless silhouettes that will feel as right on the next wrist as they do on yours." },
+            ].map((item, i) => (
+              <Reveal key={item.t} delay={i * 120}>
+                <div className="legacy-card">
+                  <svg viewBox="0 0 24 24" fill="none" className="legacy-diamond"><path d="M12 2 L22 9 L12 22 L2 9 Z" stroke="#C7A15A" strokeWidth="1.2" /></svg>
+                  <h3>{item.t}</h3>
+                  <p>{item.d}</p>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
+      <section className="section" style={{ paddingBottom: 60 }}>
         <div className="container">
-          <div className="section-head">
-            <div className="eyebrow">Community</div>
-            <h2>@jovieandco</h2>
-          </div>
+          <Reveal>
+            <div className="section-head">
+              <div className="eyebrow">Community</div>
+              <h2>@jovieandco</h2>
+              <p>Follow along as the first collection comes to life.</p>
+            </div>
+          </Reveal>
         </div>
         <div className="insta-grid">
-          {Array.from({ length: 6 }).map((_, i) => <div className="insta-tile" key={i}></div>)}
+          {[
+            "clover-necklace-green.webp",
+            "celestial-moon-star-bracelet.webp",
+            "butterfly-pendant-gold.webp",
+            "halo-station-tennis-bracelet.webp",
+            "clover-necklace-red.webp",
+            "iridescent-butterfly-earrings.webp",
+          ].map((img, i) => (
+            <div className="insta-tile" key={i}>
+              <img src={`/products/${img}`} alt="Jovie & Co jewelry" loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            </div>
+          ))}
         </div>
       </section>
 

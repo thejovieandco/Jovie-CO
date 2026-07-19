@@ -14,8 +14,8 @@ export default function Newsletter() {
     <section className="newsletter">
       <div className="container">
         <div className="eyebrow">Stay Connected</div>
-        <h2>Join the Jovie &amp; Co Circle</h2>
-        <p>Early access to new collections, private sales, and stories from the atelier.</p>
+        <h2>Be Part of the Legacy</h2>
+        <p>Early access to the founding collection, private sales, and the story as it unfolds.</p>
         {submitted ? (
           <p style={{ color: "#C7A15A" }}>You're on the list. Welcome.</p>
         ) : (
