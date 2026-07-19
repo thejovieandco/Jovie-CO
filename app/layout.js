@@ -4,9 +4,9 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 export const metadata = {
-  title: "Jovie & Co | Timeless Jewelry, Crafted to Last",
+  title: "Jovie & Co | Jewelry Made to Be Passed Down",
   description:
-    "Inspired by love and designed to celebrate life's most meaningful moments. Every piece is crafted to be treasured for generations.",
+    "Crafted today, treasured for generations. Every Jovie & Co piece is designed to outlive the moment it marks — jewelry made to become a legacy.",
 };
 
 export default function RootLayout({ children }) {
