@@ -77,10 +77,21 @@ export default function CartPage() {
               {formatPrice(item.product.price)}
             </div>
           </div>
-          <div className="cart-qty">
-            <button onClick={() => updateQuantity(item.handle, item.quantity - 1)}>−</button>
-            <span>{item.quantity}</span>
-            <button onClick={() => updateQuantity(item.handle, item.quantity + 1)}>+</button>
+          <div>
+            <div className="cart-qty">
+              <button onClick={() => updateQuantity(item.handle, item.quantity - 1)}>−</button>
+              <span>{item.quantity}</span>
+              <button
+                onClick={() => updateQuantity(item.handle, item.quantity + 1)}
+                disabled={item.product.stock != null && item.quantity >= item.product.stock}
+                style={item.product.stock != null && item.quantity >= item.product.stock ? { opacity: 0.35, cursor: "default" } : undefined}
+              >+</button>
+            </div>
+            {item.product.stock != null && item.quantity >= item.product.stock && (
+              <div style={{ fontSize: 11, color: "#A8823E", marginTop: 6, letterSpacing: "0.04em" }}>
+                Only {item.product.stock} available
+              </div>
+            )}
           </div>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 8 }}>
             <span>{formatPrice(item.product.price * item.quantity)}</span>

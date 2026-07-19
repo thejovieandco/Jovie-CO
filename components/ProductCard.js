@@ -23,6 +23,9 @@ export default function ProductCard({ product }) {
       </Tilt3D>
       <div className="product-name">{product.name}</div>
       <div className="product-price">{formatPrice(product.price)}</div>
+      {product.stock > 0 && product.stock <= 3 && (
+        <div className="stock-note">Only {product.stock} left</div>
+      )}
     </Link>
   );
 }
