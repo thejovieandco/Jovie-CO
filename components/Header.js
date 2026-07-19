@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCart } from "./CartProvider";
+import { PREORDER, PREORDER_SHIP_DATE } from "../lib/products";
 
 export default function Header() {
   const { count } = useCart();
@@ -9,7 +10,9 @@ export default function Header() {
   return (
     <>
       <div className="announce">
-        Preorder the Founding Collection &nbsp;·&nbsp; Ships July 28 &nbsp;·&nbsp; Free US Shipping Over $50
+        {PREORDER
+          ? <>Preorder the Founding Collection &nbsp;·&nbsp; Ships {PREORDER_SHIP_DATE} &nbsp;·&nbsp; Free US Shipping Over $50</>
+          : <>The Founding Collection Is Here &nbsp;·&nbsp; Free US Shipping on Orders Over $50</>}
       </div>
       <header>
         <div className="nav-wrap">
