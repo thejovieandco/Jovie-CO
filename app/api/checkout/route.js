@@ -24,8 +24,9 @@ export async function POST(request) {
     const line_items = items.map(({ handle, quantity }) => {
       const product = getProductByHandle(handle);
       if (!product) throw new Error(`Unknown product: ${handle}`);
+      const capped = product.stock != null ? Math.min(quantity, product.stock) : quantity;
       return {
-        quantity,
+        quantity: capped,
         price_data: {
           currency: "usd",
           unit_amount: product.price,

@@ -176,6 +176,10 @@ header{
 }
 .product-name{font-family:'Cormorant Garamond'; font-size:19px; margin-bottom:4px;}
 .product-price{font-size:13px; color:#6b6b66;}
+.stock-note{
+  font-size:11px; letter-spacing:0.12em; text-transform:uppercase; font-weight:600;
+  color:var(--gold-dark); margin-top:5px;
+}
 
 .cat-tile{
   position:relative; aspect-ratio:3/4; overflow:hidden; display:flex; align-items:flex-end; justify-content:center;

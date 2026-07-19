@@ -1,9 +1,16 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
+import { getProductByHandle } from "../lib/products";
 
 const CartContext = createContext(null);
 const STORAGE_KEY = "jovie-cart";
+
+// Never let the bag hold more of a piece than we have in stock.
+function maxStock(handle) {
+  const product = getProductByHandle(handle);
+  return product?.stock ?? 99;
+}
 
 export function CartProvider({ children }) {
   const [items, setItems] = useState([]);
@@ -29,10 +36,12 @@ export function CartProvider({ children }) {
       const existing = prev.find((i) => i.handle === handle);
       if (existing) {
         return prev.map((i) =>
-          i.handle === handle ? { ...i, quantity: i.quantity + quantity } : i
+          i.handle === handle
+            ? { ...i, quantity: Math.min(i.quantity + quantity, maxStock(handle)) }
+            : i
         );
       }
-      return [...prev, { handle, quantity }];
+      return [...prev, { handle, quantity: Math.min(quantity, maxStock(handle)) }];
     });
   }
 
@@ -42,8 +51,9 @@ export function CartProvider({ children }) {
 
   function updateQuantity(handle, quantity) {
     if (quantity <= 0) return removeItem(handle);
+    const clamped = Math.min(quantity, maxStock(handle));
     setItems((prev) =>
-      prev.map((i) => (i.handle === handle ? { ...i, quantity } : i))
+      prev.map((i) => (i.handle === handle ? { ...i, quantity: clamped } : i))
     );
   }
 
