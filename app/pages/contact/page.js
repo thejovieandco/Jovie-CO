@@ -32,8 +32,8 @@ export default function ContactPage() {
           <h2>Social</h2>
           <p>
             Follow along as the founding collection comes to life on Instagram:{" "}
-            <a href="https://instagram.com/jovieandco" target="_blank" rel="noopener noreferrer">
-              @jovieandco
+            <a href="https://www.instagram.com/thejovieandco" target="_blank" rel="noopener noreferrer">
+              @thejovieandco
             </a>
           </p>
 
