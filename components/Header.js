@@ -59,7 +59,7 @@ export default function Header() {
             <small>Jewelry</small>
           </Link>
           <div className="nav-right">
-            <Link href="/#reviews">Reviews</Link>
+            <Link href="/#reviews" className="nav-reviews">Reviews</Link>
             <Link href="/cart" className="cart-link">
               Cart{count > 0 ? ` (${count})` : ""}
             </Link>
