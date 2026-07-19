@@ -132,7 +132,14 @@ header{
   display:inline-block; background:var(--black); color:var(--white);
   padding:16px 38px; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; font-weight:600;
   border:1px solid var(--black); transition:all 0.4s ease; cursor:pointer;
+  position:relative; overflow:hidden;
 }
+.btn::after{
+  content:""; position:absolute; top:0; left:-80%; width:45%; height:100%;
+  background:linear-gradient(100deg, transparent, rgba(255,255,255,0.35), transparent);
+  transform:skewX(-20deg); transition:left 0.6s ease; pointer-events:none;
+}
+.btn:hover::after{left:140%;}
 .btn:hover{background:transparent; color:var(--black);}
 .btn-outline{background:transparent; color:var(--black);}
 .btn-outline:hover{background:var(--black); color:var(--white);}
@@ -281,6 +288,11 @@ footer{background:var(--champagne); padding:70px 0 30px;}
 .reveal.is-revealed{
   opacity:1;
   transform:perspective(900px) translateY(0) rotateX(0) scale(1);
+}
+.reveal.from-left{transform:perspective(900px) translateX(-56px) rotateY(7deg);}
+.reveal.from-right{transform:perspective(900px) translateX(56px) rotateY(-7deg);}
+.reveal.from-left.is-revealed, .reveal.from-right.is-revealed{
+  transform:perspective(900px) translateX(0) rotateY(0);
 }
 @media(prefers-reduced-motion:reduce){
   .reveal{opacity:1; transform:none; transition:none;}
@@ -451,6 +463,68 @@ footer{background:var(--champagne); padding:70px 0 30px;}
 }
 .footer-social svg{width:17px; height:17px;}
 .footer-social:hover{color:var(--gold-dark);}
+
+/* --- Product inspection viewer ------------------------------------ */
+.viewer-wrap{display:flex; flex-direction:column; gap:14px;}
+.viewer-frame{
+  position:relative; aspect-ratio:4/5; overflow:hidden;
+  background:linear-gradient(150deg,#f2ede2,#e3d6b8 60%,#d3bd8e);
+  transform:perspective(950px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+  transition:transform 0.18s ease-out, box-shadow 0.3s ease;
+  will-change:transform; cursor:crosshair;
+}
+.viewer-frame:hover{box-shadow:0 30px 70px -25px rgba(90,68,25,0.45);}
+.viewer-frame img{width:100%; height:100%; object-fit:cover;}
+.viewer-lens{
+  position:absolute; width:180px; height:180px; border-radius:50%;
+  transform:translate(-50%,-50%);
+  background-repeat:no-repeat; background-size:760%;
+  border:1px solid rgba(199,161,90,0.9);
+  box-shadow:0 14px 34px rgba(26,26,26,0.3), inset 0 0 0 3px rgba(250,250,248,0.55);
+  pointer-events:none; z-index:5;
+}
+.viewer-badge{
+  position:absolute; top:16px; right:16px; z-index:4;
+  display:inline-flex; align-items:center; gap:7px;
+  font-size:10px; letter-spacing:0.18em; text-transform:uppercase; font-weight:600;
+  color:var(--gold-dark); background:rgba(250,250,248,0.88); backdrop-filter:blur(4px);
+  border:1px solid rgba(199,161,90,0.5); padding:8px 13px;
+}
+.viewer-badge svg{width:13px; height:13px;}
+.viewer-hint{
+  font-size:11px; letter-spacing:0.16em; text-transform:uppercase;
+  color:#8a8880; text-align:center; font-weight:600;
+}
+@media(hover:none){
+  .viewer-frame{transform:none !important; cursor:default;}
+  .viewer-lens, .viewer-hint, .viewer-badge{display:none;}
+}
+
+/* --- Sliding marquee band ------------------------------------------ */
+.marquee{
+  overflow:hidden; background:var(--black); padding:16px 0;
+  border-top:1px solid rgba(199,161,90,0.35); border-bottom:1px solid rgba(199,161,90,0.35);
+}
+.marquee-track{
+  display:flex; width:max-content;
+  animation:marquee-slide 30s linear infinite;
+}
+.marquee:hover .marquee-track{animation-play-state:paused;}
+.marquee-item{
+  display:inline-flex; align-items:center; gap:26px; padding-right:26px;
+  font-family:'Cormorant Garamond', serif; font-size:17px; font-style:italic;
+  color:var(--champagne); white-space:nowrap;
+}
+.marquee-item svg{width:11px; height:11px; opacity:0.8;}
+@keyframes marquee-slide{to{transform:translateX(-50%);}}
+@media(prefers-reduced-motion:reduce){.marquee-track{animation:none;}}
+
+/* --- Footer contact ------------------------------------------------- */
+.footer-contact{display:flex; flex-direction:column; gap:6px; margin-top:16px;}
+.footer-contact a{
+  font-size:13.5px; color:#57544c; transition:color 0.3s ease; width:fit-content;
+}
+.footer-contact a:hover{color:var(--gold-dark);}
 
 /* --- Info pages (ring sizing, shipping, privacy, etc.) ----------- */
 .info-page{max-width:760px; margin:0 auto; padding:70px 0 100px;}

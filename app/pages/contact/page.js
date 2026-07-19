@@ -19,9 +19,16 @@ export default function ContactPage() {
             to hear from you.
           </p>
 
+          <h2>Call or Text</h2>
+          <p>
+            Reach us directly at <a href="tel:+14703312618">(470) 331-2618</a> — texts
+            welcome. If we miss your call, leave a message and we'll get back to you
+            within a business day.
+          </p>
+
           <h2>Email</h2>
           <p>
-            The fastest way to reach us is email:{" "}
+            For anything detailed — orders, returns, sizing help — email is best:{" "}
             <a href="mailto:thejovieandco@gmail.com">thejovieandco@gmail.com</a>
           </p>
           <p>

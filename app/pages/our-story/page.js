@@ -25,7 +25,7 @@ export default function OurStoryPage() {
 
       <section className="section" style={{ paddingTop: 70 }}>
         <div className="container story">
-          <Reveal>
+          <Reveal className="from-left">
             <Tilt3D className="story-tilt" max={7}>
               <div className="story-photo">
                 <img
@@ -36,7 +36,7 @@ export default function OurStoryPage() {
               </div>
             </Tilt3D>
           </Reveal>
-          <Reveal delay={140}>
+          <Reveal delay={140} className="from-right">
             <div className="story-text">
               <div className="eyebrow">Where It Begins</div>
               <h2>The First Chapter</h2>
