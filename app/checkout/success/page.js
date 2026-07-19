@@ -5,12 +5,14 @@ import Link from "next/link";
 import { useCart } from "../../../components/CartProvider";
 
 export default function CheckoutSuccess() {
-  const { clearCart } = useCart();
+  const { clearCart, loaded } = useCart();
 
+  // Wait for the saved cart to load before clearing, otherwise the
+  // load overwrites the clear and the bag comes back.
   useEffect(() => {
-    clearCart();
+    if (loaded) clearCart();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [loaded]);
 
   return (
     <div className="container" style={{ padding: "120px 48px", textAlign: "center" }}>
