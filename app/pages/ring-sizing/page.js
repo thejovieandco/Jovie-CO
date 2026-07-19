@@ -60,26 +60,66 @@ export default function RingSizingPage() {
             </table>
           </div>
 
-          <h2>How to Measure at Home</h2>
-          <h3>Option 1 — Measure a ring you own</h3>
-          <ol>
-            <li>Choose a ring that fits the intended finger comfortably.</li>
-            <li>Measure the inside diameter, edge to edge, with a ruler in millimeters.</li>
-            <li>Match the measurement to the closest diameter in the chart above.</li>
-          </ol>
+          <h2>How to Find Your Size at Home</h2>
+          <p>
+            You'll need about two minutes and either a ring you already own or a strip of
+            paper and a ruler. Both methods below work with the chart above.
+          </p>
 
-          <h3>Option 2 — Measure your finger</h3>
-          <ol>
-            <li>Wrap a thin strip of paper or a piece of string snugly around the base of your finger.</li>
-            <li>Mark where it overlaps, then measure that length in millimeters.</li>
-            <li>Match the measurement to the closest circumference in the chart above.</li>
-          </ol>
+          <span className="method-label">Method 1 — Use a Ring You Own</span>
+          <h3>The most accurate option</h3>
+          <ul className="step-list">
+            <li>
+              <span className="step-num">1</span>
+              <p><strong>Pick the right ring.</strong> Choose one that fits the exact finger
+              you're shopping for — sizes differ between fingers and even between hands.</p>
+            </li>
+            <li>
+              <span className="step-num">2</span>
+              <p><strong>Measure the inside.</strong> Lay the ring on a ruler and measure the
+              inside of the band, edge to edge across the widest point, in millimeters. Don't
+              include the metal itself.</p>
+            </li>
+            <li>
+              <span className="step-num">3</span>
+              <p><strong>Match to the chart.</strong> Find the closest number in the
+              &ldquo;Inside Diameter&rdquo; column above — that row is your US size.</p>
+            </li>
+          </ul>
+
+          <span className="method-label">Method 2 — Measure Your Finger</span>
+          <h3>No ring? Use paper or string</h3>
+          <ul className="step-list">
+            <li>
+              <span className="step-num">1</span>
+              <p><strong>Cut a thin strip.</strong> Use a strip of paper about 5mm wide (or a
+              piece of non-stretchy string) — wide ribbon or stretchy material will throw off
+              the measurement.</p>
+            </li>
+            <li>
+              <span className="step-num">2</span>
+              <p><strong>Wrap and mark.</strong> Wrap it around the base of your finger, snug
+              but not tight — it should slide over your knuckle with slight resistance. Mark
+              the exact point where the end overlaps.</p>
+            </li>
+            <li>
+              <span className="step-num">3</span>
+              <p><strong>Measure the length.</strong> Unroll it flat and measure from the end
+              to your mark in millimeters.</p>
+            </li>
+            <li>
+              <span className="step-num">4</span>
+              <p><strong>Match to the chart.</strong> Find the closest number in the
+              &ldquo;Inside Circumference&rdquo; column above — that row is your US size.</p>
+            </li>
+          </ul>
 
           <div className="info-note">
             <strong>Tips for the best fit:</strong> measure at the end of the day when your
-            fingers are at their largest, avoid measuring when your hands are cold, and if
-            you're between sizes, choose the larger one. Knuckles matter too — the ring has
-            to pass over yours comfortably.
+            fingers are at their largest, avoid measuring when your hands are cold, and
+            repeat the measurement two or three times to make sure it's consistent. If
+            you're between sizes, choose the larger one — and remember the ring has to pass
+            over your knuckle comfortably.
           </div>
 
           <h2>Adjustable Pieces</h2>
