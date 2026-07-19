@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { products } from "../lib/products";
+import { products, PREORDER, PREORDER_SHIP_DATE } from "../lib/products";
 import ProductCard from "../components/ProductCard";
 import Newsletter from "../components/Newsletter";
 import HeroScene from "../components/HeroScene";
@@ -17,9 +17,14 @@ export default function Home() {
         <div className="container">
           <Reveal>
             <div className="section-head">
-              <div className="eyebrow">Preorder Now</div>
+              <div className="eyebrow">{PREORDER ? "Preorder Now" : "Now Available"}</div>
               <h2>The Founding Collection</h2>
-              <p>Eighteen pieces, each made to be kept. Reserve yours today — every preorder ships July 28.</p>
+              <p>
+                Eighteen pieces, each made to be kept.
+                {PREORDER
+                  ? ` Reserve yours today — every preorder ships ${PREORDER_SHIP_DATE}.`
+                  : " Each ready to begin its story with you."}
+              </p>
             </div>
           </Reveal>
           <div className="grid-4">

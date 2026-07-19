@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Tilt3D from "./Tilt3D";
+import { PREORDER, PREORDER_SHIP_DATE } from "../lib/products";
 
 // Fixed positions so the server and client render the same particles.
 const SPARKS = [
@@ -53,15 +54,19 @@ export default function HeroScene() {
 
       <div className="container hero-3d-grid">
         <div className="hero-content hero-layer-text">
-          <div className="hero-eyebrow">Preorder Now — Ships July 28</div>
+          <div className="hero-eyebrow">
+            {PREORDER ? `Preorder Now — Ships ${PREORDER_SHIP_DATE}` : "The Founding Collection"}
+          </div>
           <h1>Crafted Today.<br />Treasured for<br />Generations.</h1>
           <p>
             Every piece we make is designed to outlive the moment it marks —
             jewelry meant to be worn, loved, and one day passed on.
-            Reserve yours now — the founding collection ships July 28.
+            {PREORDER
+              ? ` Reserve yours now — the founding collection ships ${PREORDER_SHIP_DATE}.`
+              : " The founding collection has arrived."}
           </p>
           <div className="hero-actions">
-            <a href="#preview" className="btn">Preorder the Collection</a>
+            <a href="#preview" className="btn">{PREORDER ? "Preorder the Collection" : "Shop the Collection"}</a>
             <a href="/pages/our-story" className="btn btn-outline">The Legacy</a>
           </div>
         </div>
