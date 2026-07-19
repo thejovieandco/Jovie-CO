@@ -9,7 +9,7 @@ export default function Header() {
   return (
     <>
       <div className="announce">
-        The Founding Collection Is Here &nbsp;·&nbsp; Free US Shipping on Orders Over $50
+        Preorder the Founding Collection &nbsp;·&nbsp; Ships July 28 &nbsp;·&nbsp; Free US Shipping Over $50
       </div>
       <header>
         <div className="nav-wrap">

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useCart } from "./CartProvider";
+import { PREORDER } from "../lib/products";
 
 export default function AddToCartButton({ handle }) {
   const { addItem } = useCart();
@@ -15,7 +16,7 @@ export default function AddToCartButton({ handle }) {
 
   return (
     <button className="btn" onClick={handleClick}>
-      {added ? "Added to Bag" : "Add to Bag"}
+      {added ? "Added to Bag" : PREORDER ? "Preorder Now" : "Add to Bag"}
     </button>
   );
 }

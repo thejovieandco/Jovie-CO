@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useCart } from "../../components/CartProvider";
-import { getProductByHandle, formatPrice } from "../../lib/products";
+import { getProductByHandle, formatPrice, PREORDER, PREORDER_SHIP_DATE } from "../../lib/products";
 
 export default function CartPage() {
   const { items, updateQuantity, removeItem } = useCart();
@@ -103,6 +103,11 @@ export default function CartPage() {
           <span>Shipping</span>
           <span>Calculated at checkout</span>
         </div>
+        {PREORDER && (
+          <p style={{ fontSize: 12, color: "#A8823E", letterSpacing: "0.05em", textTransform: "uppercase", margin: "4px 0 12px" }}>
+            Preorder — ships {PREORDER_SHIP_DATE}
+          </p>
+        )}
         {error && <p style={{ color: "#b23b3b", fontSize: 13, marginBottom: 12 }}>{error}</p>}
         <button className="btn" style={{ width: "100%" }} onClick={handleCheckout} disabled={loading}>
           {loading ? "Redirecting…" : "Checkout"}

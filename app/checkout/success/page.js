@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { useCart } from "../../../components/CartProvider";
+import { PREORDER, PREORDER_SHIP_DATE } from "../../../lib/products";
 
 export default function CheckoutSuccess() {
   const { clearCart, loaded } = useCart();
@@ -19,7 +20,8 @@ export default function CheckoutSuccess() {
       <h1 style={{ marginBottom: 20 }}>Thank You</h1>
       <p style={{ color: "#4a4a46", maxWidth: 440, margin: "0 auto 32px" }}>
         Your order has been placed. A confirmation email is on its way, and your
-        piece will be prepared with care before it ships.
+        piece will be prepared with care before it ships
+        {PREORDER ? ` — preorders ship beginning ${PREORDER_SHIP_DATE}` : ""}.
       </p>
       <Link href="/" className="btn">Continue Shopping</Link>
     </div>

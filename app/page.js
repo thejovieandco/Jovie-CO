@@ -17,9 +17,9 @@ export default function Home() {
         <div className="container">
           <Reveal>
             <div className="section-head">
-              <div className="eyebrow">Now Available</div>
+              <div className="eyebrow">Preorder Now</div>
               <h2>The Founding Collection</h2>
-              <p>Eighteen pieces, each made to be kept — and each ready to begin its story with you.</p>
+              <p>Eighteen pieces, each made to be kept. Reserve yours today — every preorder ships July 28.</p>
             </div>
           </Reveal>
           <div className="grid-4">
