@@ -8,6 +8,10 @@ export default function Footer() {
           <div className="footer-brand">
             <div className="logo-mark">Jovie &amp; Co</div>
             <p>Jewelry made to be passed down — crafted today, treasured for generations.</p>
+            <p className="footer-contact">
+              <a href="tel:+14703312618">(470) 331-2618</a>
+              <a href="mailto:thejovieandco@gmail.com">thejovieandco@gmail.com</a>
+            </p>
             <a
               href="https://www.instagram.com/thejovieandco"
               target="_blank"

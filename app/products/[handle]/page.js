@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { products, getProductByHandle, formatPrice, PREORDER, PREORDER_SHIP_DATE } from "../../../lib/products";
 import AddToCartButton from "../../../components/AddToCartButton";
+import ProductViewer from "../../../components/ProductViewer";
 
 export function generateStaticParams() {
   return products.map((p) => ({ handle: p.handle }));
@@ -22,13 +23,13 @@ export default function ProductPage({ params }) {
   return (
     <div className="container">
       <div className="product-detail">
-        <div className="product-detail-photo">
-          {product.image ? (
-            <img src={product.image} alt={product.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-          ) : (
+        {product.image ? (
+          <ProductViewer src={product.image} alt={product.name} />
+        ) : (
+          <div className="product-detail-photo">
             <div className="ph-label">Product photo — {product.name}</div>
-          )}
-        </div>
+          </div>
+        )}
         <div className="product-detail-info">
           <h1>{product.name}</h1>
           <div className="product-detail-price">{formatPrice(product.price)}</div>

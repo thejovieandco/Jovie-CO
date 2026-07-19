@@ -5,6 +5,7 @@ import Newsletter from "../components/Newsletter";
 import HeroScene from "../components/HeroScene";
 import Reveal from "../components/Reveal";
 import Tilt3D from "../components/Tilt3D";
+import Marquee from "../components/Marquee";
 
 export default function Home() {
   const preview = products;
@@ -12,6 +13,8 @@ export default function Home() {
   return (
     <>
       <HeroScene />
+
+      <Marquee />
 
       <section className="section" id="preview">
         <div className="container">
@@ -45,7 +48,7 @@ export default function Home() {
 
       <section className="section" id="story">
         <div className="container story">
-          <Reveal>
+          <Reveal className="from-left">
             <Tilt3D className="story-tilt" max={7}>
               <div className="story-photo">
                 <img
@@ -56,7 +59,7 @@ export default function Home() {
               </div>
             </Tilt3D>
           </Reveal>
-          <Reveal delay={140}>
+          <Reveal delay={140} className="from-right">
             <div className="story-text">
               <div className="eyebrow">Our Story</div>
               <h2>Built to Be<br />Passed Down</h2>
