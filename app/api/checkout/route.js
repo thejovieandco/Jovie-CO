@@ -36,6 +36,14 @@ export async function POST(request) {
 
     const origin = request.headers.get("origin") || "http://localhost:3000";
 
+    // Free standard shipping on orders of $50+ — keep in sync with the
+    // announcement bar in components/Header.js
+    const subtotal = line_items.reduce(
+      (sum, li) => sum + li.price_data.unit_amount * li.quantity,
+      0
+    );
+    const standardAmount = subtotal >= 5000 ? 0 : 595;
+
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items,
@@ -44,8 +52,8 @@ export async function POST(request) {
         {
           shipping_rate_data: {
             type: "fixed_amount",
-            fixed_amount: { amount: 595, currency: "usd" },
-            display_name: "Standard Shipping",
+            fixed_amount: { amount: standardAmount, currency: "usd" },
+            display_name: standardAmount === 0 ? "Standard Shipping — Free" : "Standard Shipping",
             delivery_estimate: {
               minimum: { unit: "business_day", value: 5 },
               maximum: { unit: "business_day", value: 8 },
