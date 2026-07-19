@@ -15,7 +15,7 @@ export default function Newsletter() {
       <div className="container">
         <div className="eyebrow">Stay Connected</div>
         <h2>Be Part of the Legacy</h2>
-        <p>Early access to the founding collection, private sales, and the story as it unfolds.</p>
+        <p>New pieces, private sales, and the story as it unfolds — straight to your inbox.</p>
         {submitted ? (
           <p style={{ color: "#C7A15A" }}>You're on the list. Welcome.</p>
         ) : (

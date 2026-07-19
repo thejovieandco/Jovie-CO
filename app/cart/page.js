@@ -60,7 +60,15 @@ export default function CartPage() {
 
       {lineItems.map((item) => (
         <div className="cart-row" key={item.handle}>
-          <div className="cart-row-photo"></div>
+          <div className="cart-row-photo">
+            {item.product.image && (
+              <img
+                src={item.product.image}
+                alt={item.product.name}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            )}
+          </div>
           <div>
             <Link href={`/products/${item.handle}`} style={{ fontFamily: "Cormorant Garamond", fontSize: 19 }}>
               {item.product.name}

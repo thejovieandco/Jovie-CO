@@ -58,10 +58,10 @@ export default function HeroScene() {
           <p>
             Every piece we make is designed to outlive the moment it marks —
             jewelry meant to be worn, loved, and one day passed on.
-            Our first collection is almost here.
+            The founding collection has arrived.
           </p>
           <div className="hero-actions">
-            <a href="#preview" className="btn">See the Collection</a>
+            <a href="#preview" className="btn">Shop the Collection</a>
             <a href="/pages/our-story" className="btn btn-outline">The Legacy</a>
           </div>
         </div>
