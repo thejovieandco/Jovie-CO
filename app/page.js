@@ -17,9 +17,9 @@ export default function Home() {
         <div className="container">
           <Reveal>
             <div className="section-head">
-              <div className="eyebrow">A First Look</div>
+              <div className="eyebrow">Now Available</div>
               <h2>The Founding Collection</h2>
-              <p>Eighteen pieces, each made to be kept. Pricing and full details are on the way — join the list below to be first to shop.</p>
+              <p>Eighteen pieces, each made to be kept — and each ready to begin its story with you.</p>
             </div>
           </Reveal>
           <div className="grid-4">

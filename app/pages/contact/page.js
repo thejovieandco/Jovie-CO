@@ -49,8 +49,8 @@ export default function ContactPage() {
               on the <Link href="/pages/shipping-returns">Shipping &amp; Returns</Link> page.
             </li>
             <li>
-              <strong>Collection launch</strong> — join the list at the bottom of any page
-              to be first to know when pieces become available.
+              <strong>Orders</strong> — include your order number in your email and we'll
+              take care of the rest.
             </li>
           </ul>
 
