@@ -57,6 +57,16 @@ header{
 .account-head{display:flex; align-items:center; justify-content:space-between; gap:20px;}
 .account-signin{max-width:480px; margin:0 auto; text-align:center;}
 .account-signin-widget{display:flex; justify-content:center;}
+.account-toggle{
+  display:flex; justify-content:center; gap:0; margin-bottom:30px;
+  border:1px solid var(--line); width:fit-content; margin-left:auto; margin-right:auto;
+}
+.account-toggle button{
+  background:none; border:none; cursor:pointer;
+  padding:12px 26px; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; font-weight:600;
+  color:#8a8880; transition:all 0.3s ease;
+}
+.account-toggle button.is-active{background:var(--black); color:var(--white);}
 .order-row{
   display:flex; justify-content:space-between; align-items:flex-start; gap:24px;
   padding:22px 0; border-bottom:1px solid var(--line);
