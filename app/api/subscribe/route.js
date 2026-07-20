@@ -15,8 +15,9 @@ export async function POST(request) {
       );
     }
 
-    const key = process.env.MAILCHIMP_API_KEY;
-    const listId = process.env.MAILCHIMP_AUDIENCE_ID;
+    // Trim to survive stray spaces/newlines from pasting on a phone
+    const key = (process.env.MAILCHIMP_API_KEY || "").trim();
+    const listId = (process.env.MAILCHIMP_AUDIENCE_ID || "").trim();
     if (!key || !listId) {
       return NextResponse.json(
         { error: "The list isn't connected yet — please try again soon." },
@@ -26,6 +27,13 @@ export async function POST(request) {
 
     // The data center is the suffix of the API key, e.g. "us21"
     const dc = key.split("-")[1];
+    if (!dc) {
+      console.error("MAILCHIMP_API_KEY has no data-center suffix (expected something like xxxx-us21)");
+      return NextResponse.json(
+        { error: "Setup issue: the API key looks incomplete — it should end in something like -us21." },
+        { status: 500 }
+      );
+    }
     const res = await fetch(
       `https://${dc}.api.mailchimp.com/3.0/lists/${listId}/members`,
       {
@@ -57,7 +65,19 @@ export async function POST(request) {
       );
     }
 
-    console.error("Mailchimp error:", data.title, data.detail);
+    console.error("Mailchimp error:", res.status, data.title, data.detail);
+    if (res.status === 401) {
+      return NextResponse.json(
+        { error: "Setup issue: Mailchimp rejected the API key — re-copy MAILCHIMP_API_KEY." },
+        { status: 500 }
+      );
+    }
+    if (res.status === 404) {
+      return NextResponse.json(
+        { error: "Setup issue: audience not found — re-copy MAILCHIMP_AUDIENCE_ID." },
+        { status: 500 }
+      );
+    }
     return NextResponse.json(
       { error: "Couldn't add you right now — please try again." },
       { status: 500 }
