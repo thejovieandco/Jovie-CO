@@ -1,10 +1,11 @@
 import { clerkMiddleware } from "@clerk/nextjs/server";
+import { clerkEnabled, clerkPublishableKey } from "./lib/clerk";
 
-// Clerk only activates once its keys exist in the environment.
-// Without them the middleware is a no-op and the site runs as before.
-const clerkEnabled = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
-
-export default clerkEnabled ? clerkMiddleware() : function middleware() {};
+// Clerk only activates once a valid-looking publishable key exists.
+// Without one the middleware is a no-op and the site runs as before.
+export default clerkEnabled
+  ? clerkMiddleware({ publishableKey: clerkPublishableKey })
+  : function middleware() {};
 
 export const config = {
   matcher: [

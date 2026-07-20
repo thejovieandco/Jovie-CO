@@ -2,12 +2,13 @@ import Stripe from "stripe";
 import { NextResponse } from "next/server";
 import { currentUser } from "@clerk/nextjs/server";
 import { PREORDER, PREORDER_SHIP_DATE } from "../../../lib/products";
+import { clerkEnabled } from "../../../lib/clerk";
 
 // Returns the signed-in customer's orders, read straight from Stripe by
 // their verified email — no separate database needed.
 export async function GET() {
   try {
-    if (!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) {
+    if (!clerkEnabled) {
       return NextResponse.json({ error: "Accounts aren't enabled yet." }, { status: 501 });
     }
     if (!process.env.STRIPE_SECRET_KEY) {

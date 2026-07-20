@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SignedIn, SignedOut, SignIn, SignUp, UserButton, useUser } from "@clerk/nextjs";
 import { formatPrice } from "../../lib/products";
-
-const clerkEnabled = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+import { clerkEnabled } from "../../lib/clerk";
 
 // Match the Clerk widgets to the Jovie & Co look
 const clerkAppearance = {
