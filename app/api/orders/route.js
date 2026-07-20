@@ -6,6 +6,9 @@ import { clerkEnabled } from "../../../lib/clerk";
 
 // Returns the signed-in customer's orders, read straight from Stripe by
 // their verified email — no separate database needed.
+// Must never be prerendered at build time: it depends on the signed-in user.
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     if (!clerkEnabled) {
