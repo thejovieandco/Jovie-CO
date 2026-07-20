@@ -2,10 +2,25 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { SignedIn, SignedOut, SignIn, UserButton, useUser } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignIn, SignUp, UserButton, useUser } from "@clerk/nextjs";
 import { formatPrice } from "../../lib/products";
 
 const clerkEnabled = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
+// Match the Clerk widgets to the Jovie & Co look
+const clerkAppearance = {
+  variables: {
+    colorPrimary: "#1A1A1A",
+    colorText: "#1A1A1A",
+    borderRadius: "0px",
+    fontFamily: "Manrope, sans-serif",
+  },
+  elements: {
+    card: { boxShadow: "0 24px 60px -18px rgba(26,26,26,0.25)", border: "1px solid rgba(199,161,90,0.45)" },
+    headerTitle: { fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 },
+    formButtonPrimary: { textTransform: "uppercase", letterSpacing: "0.14em", fontSize: "11px", fontWeight: 600 },
+  },
+};
 
 export default function AccountPage() {
   if (!clerkEnabled) {
@@ -27,17 +42,41 @@ export default function AccountPage() {
 }
 
 function AccountInner() {
+  const [mode, setMode] = useState("signin"); // signin | signup
+
   return (
     <div className="container" style={{ padding: "60px 48px 100px" }}>
       <SignedOut>
         <div className="account-signin">
-          <div className="section-head" style={{ marginBottom: 32 }}>
+          <div className="section-head" style={{ marginBottom: 28 }}>
             <div className="eyebrow">Your Account</div>
-            <h2>Welcome Back</h2>
-            <p>Sign in to see your orders and track your pieces.</p>
+            <h2>{mode === "signin" ? "Welcome Back" : "Join Jovie & Co"}</h2>
+            <p>
+              {mode === "signin"
+                ? "Sign in to see your orders and track your pieces."
+                : "Create an account to keep your orders and story in one place."}
+            </p>
+          </div>
+          <div className="account-toggle">
+            <button
+              className={mode === "signin" ? "is-active" : ""}
+              onClick={() => setMode("signin")}
+            >
+              Sign In
+            </button>
+            <button
+              className={mode === "signup" ? "is-active" : ""}
+              onClick={() => setMode("signup")}
+            >
+              Create Account
+            </button>
           </div>
           <div className="account-signin-widget">
-            <SignIn routing="hash" />
+            {mode === "signin" ? (
+              <SignIn routing="hash" appearance={clerkAppearance} />
+            ) : (
+              <SignUp routing="hash" appearance={clerkAppearance} />
+            )}
           </div>
         </div>
       </SignedOut>
@@ -73,7 +112,7 @@ function AccountDashboard() {
             {user?.firstName ? `Welcome, ${user.firstName}` : "Welcome"}
           </h1>
         </div>
-        <UserButton afterSignOutUrl="/" />
+        <UserButton afterSignOutUrl="/" appearance={clerkAppearance} />
       </div>
 
       <h2 style={{ fontSize: 22, margin: "40px 0 8px" }}>Order History</h2>
