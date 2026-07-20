@@ -4,8 +4,7 @@ import { CartProvider } from "../components/CartProvider";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import EmailPopup from "../components/EmailPopup";
-
-const clerkEnabled = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+import { clerkEnabled, clerkPublishableKey } from "../lib/clerk";
 
 export const metadata = {
   title: "Jovie & Co | Jewelry Made to Be Passed Down",
@@ -25,7 +24,13 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body>{clerkEnabled ? <ClerkProvider>{content}</ClerkProvider> : content}</body>
+      <body>
+        {clerkEnabled ? (
+          <ClerkProvider publishableKey={clerkPublishableKey}>{content}</ClerkProvider>
+        ) : (
+          content
+        )}
+      </body>
     </html>
   );
 }
