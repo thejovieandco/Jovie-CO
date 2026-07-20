@@ -2,6 +2,7 @@ import "./globals.css";
 import { CartProvider } from "../components/CartProvider";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import EmailPopup from "../components/EmailPopup";
 
 export const metadata = {
   title: "Jovie & Co | Jewelry Made to Be Passed Down",
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
           <Header />
           {children}
           <Footer />
+          <EmailPopup />
         </CartProvider>
       </body>
     </html>
