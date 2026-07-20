@@ -21,6 +21,9 @@ export default function Newsletter() {
       if (res.ok) {
         setStatus("done");
         setMessage(data.message || "You're on the list. Welcome.");
+        try {
+          window.localStorage.setItem("jovie-subscribed", "1");
+        } catch (err) {}
       } else {
         setStatus("error");
         setMessage(data.error || "Something went wrong — please try again.");
