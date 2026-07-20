@@ -48,9 +48,28 @@ header{
 }
 @media(max-width:900px){.nav-left{display:none;}}
 @media(max-width:700px){
-  .nav-reviews{display:none;}
+  .nav-reviews, .nav-account{display:none;}
   .logo-mark{font-size:21px;}
   .logo-mark small{font-size:8px; letter-spacing:0.26em;}
+}
+
+/* --- Account page --- */
+.account-head{display:flex; align-items:center; justify-content:space-between; gap:20px;}
+.account-signin{max-width:480px; margin:0 auto; text-align:center;}
+.account-signin-widget{display:flex; justify-content:center;}
+.order-row{
+  display:flex; justify-content:space-between; align-items:flex-start; gap:24px;
+  padding:22px 0; border-bottom:1px solid var(--line);
+}
+.order-date{font-family:'Cormorant Garamond', serif; font-size:19px; margin-bottom:6px;}
+.order-items{list-style:none; margin:0; padding:0;}
+.order-items li{font-size:13.5px; color:#5b5b57; margin-bottom:3px;}
+.order-right{display:flex; flex-direction:column; align-items:flex-end; gap:8px;}
+.order-total{font-weight:600;}
+.order-status{
+  font-size:10px; letter-spacing:0.14em; text-transform:uppercase; font-weight:700;
+  padding:6px 12px; border:1px solid rgba(199,161,90,0.5); color:var(--gold-dark);
+  white-space:nowrap;
 }
 
 /* --- Hamburger button --- */

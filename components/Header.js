@@ -13,6 +13,7 @@ const MENU_LINKS = [
   { href: "/pages/our-story", label: "Our Story" },
   { href: "/pages/ring-sizing", label: "Ring Sizing" },
   { href: "/pages/contact", label: "Contact" },
+  { href: "/account", label: "Account" },
   { href: "/cart", label: "Cart" },
 ];
 
@@ -60,6 +61,7 @@ export default function Header() {
           </Link>
           <div className="nav-right">
             <Link href="/#reviews" className="nav-reviews">Reviews</Link>
+            <Link href="/account" className="nav-account">Account</Link>
             <Link href="/cart" className="cart-link">
               Cart{count > 0 ? ` (${count})` : ""}
             </Link>
