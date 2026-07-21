@@ -7,7 +7,7 @@ import EmailPopup from "../components/EmailPopup";
 import { clerkEnabled, clerkPublishableKey } from "../lib/clerk";
 
 export const metadata = {
-  metadataBase: new URL("https://thejovieandco.com"),
+  metadataBase: new URL("https://jovieandco.com"),
   title: "Jovie & Co | Jewelry Made to Be Passed Down",
   description:
     "Crafted today, treasured for generations. Every Jovie & Co piece is designed to outlive the moment it marks — jewelry made to become a legacy.",
@@ -16,7 +16,7 @@ export const metadata = {
     title: "Jovie & Co | Jewelry Made to Be Passed Down",
     description:
       "Crafted today, treasured for generations. Preorder the founding collection — eighteen pieces made to be kept.",
-    url: "https://thejovieandco.com",
+    url: "https://jovieandco.com",
     siteName: "Jovie & Co",
     type: "website",
     images: [
