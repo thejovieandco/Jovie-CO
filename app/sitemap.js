@@ -1,6 +1,6 @@
 import { products } from "../lib/products";
 
-const BASE = "https://thejovieandco.com";
+const BASE = "https://jovieandco.com";
 
 export default function sitemap() {
   const staticPages = [

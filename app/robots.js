@@ -5,6 +5,6 @@ export default function robots() {
       allow: "/",
       disallow: ["/cart", "/checkout/", "/account", "/api/"],
     },
-    sitemap: "https://thejovieandco.com/sitemap.xml",
+    sitemap: "https://jovieandco.com/sitemap.xml",
   };
 }
