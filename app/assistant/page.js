@@ -15,7 +15,28 @@ export default function AssistantPage() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const [speechSupported, setSpeechSupported] = useState(false);
+  const [listening, setListening] = useState(false);
+  const [speaking, setSpeaking] = useState(false);
+  const [convoMode, setConvoMode] = useState(false);
+
   const scrollRef = useRef(null);
+  const recognitionRef = useRef(null);
+  const audioRef = useRef(null);
+  const finalRef = useRef("");
+  const sendOnEndRef = useRef(false);
+
+  // Refs mirroring state/functions for use inside long-lived callbacks
+  const messagesRef = useRef(messages);
+  const pinRef = useRef(pin);
+  const convoRef = useRef(convoMode);
+  const supportRef = useRef(false);
+  const sendRef = useRef(() => {});
+  const listenRef = useRef(() => {});
+  messagesRef.current = messages;
+  pinRef.current = pin;
+  convoRef.current = convoMode;
 
   useEffect(() => {
     try {
@@ -23,6 +44,52 @@ export default function AssistantPage() {
       if (saved) setPin(saved);
     } catch {}
     setReady(true);
+  }, []);
+
+  // Set up speech recognition once (feature-detected)
+  useEffect(() => {
+    const SR =
+      typeof window !== "undefined" &&
+      (window.SpeechRecognition || window.webkitSpeechRecognition);
+    if (!SR) return;
+    setSpeechSupported(true);
+    supportRef.current = true;
+
+    const rec = new SR();
+    rec.lang = "en-US";
+    rec.interimResults = true;
+    rec.continuous = true;
+
+    rec.onresult = (e) => {
+      let interim = "";
+      let final = finalRef.current;
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const chunk = e.results[i][0].transcript;
+        if (e.results[i].isFinal) final += chunk;
+        else interim += chunk;
+      }
+      finalRef.current = final;
+      setInput((final + interim).trim());
+    };
+    rec.onend = () => {
+      setListening(false);
+      if (sendOnEndRef.current) {
+        sendOnEndRef.current = false;
+        const text = finalRef.current.trim();
+        if (text) sendRef.current(text);
+      }
+    };
+    rec.onerror = () => {
+      setListening(false);
+      sendOnEndRef.current = false;
+    };
+
+    recognitionRef.current = rec;
+    return () => {
+      try {
+        rec.abort();
+      } catch {}
+    };
   }, []);
 
   useEffect(() => {
@@ -47,18 +114,102 @@ export default function AssistantPage() {
     try {
       window.localStorage.removeItem(PIN_KEY);
     } catch {}
+    stopAudio();
     setPin(null);
     setMessages([]);
+    setConvoMode(false);
     setError("");
   }
 
-  async function send() {
-    const text = input.trim();
-    if (!text || loading) return;
+  function stopAudio() {
+    const a = audioRef.current;
+    if (a) {
+      try {
+        a.pause();
+      } catch {}
+      audioRef.current = null;
+    }
+    setSpeaking(false);
+  }
 
-    const next = [...messages, { role: "user", content: text }];
+  function reopenMicIfConvo() {
+    if (convoRef.current && supportRef.current) {
+      setTimeout(() => listenRef.current(), 250);
+    }
+  }
+
+  function startListening() {
+    const rec = recognitionRef.current;
+    if (!rec || listening) return;
+    stopAudio();
+    finalRef.current = "";
+    setInput("");
+    setError("");
+    try {
+      rec.start();
+      setListening(true);
+    } catch {}
+  }
+  listenRef.current = startListening;
+
+  function toggleMic() {
+    if (listening) {
+      // Stop and send whatever was captured
+      sendOnEndRef.current = true;
+      try {
+        recognitionRef.current.stop();
+      } catch {}
+    } else {
+      startListening();
+    }
+  }
+
+  async function speak(text) {
+    if (!text) return reopenMicIfConvo();
+    try {
+      const res = await fetch("/api/speak", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
+      });
+      if (!res.ok) {
+        // Voice unavailable — reply is already shown as text; keep going
+        reopenMicIfConvo();
+        return;
+      }
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      stopAudio();
+      const audio = new Audio(url);
+      audioRef.current = audio;
+      audio.onended = () => {
+        URL.revokeObjectURL(url);
+        if (audioRef.current === audio) audioRef.current = null;
+        setSpeaking(false);
+        reopenMicIfConvo();
+      };
+      audio.onerror = () => {
+        URL.revokeObjectURL(url);
+        if (audioRef.current === audio) audioRef.current = null;
+        setSpeaking(false);
+        reopenMicIfConvo();
+      };
+      setSpeaking(true);
+      await audio.play();
+    } catch {
+      setSpeaking(false);
+      reopenMicIfConvo();
+    }
+  }
+
+  async function sendMessage(text) {
+    const content = (text ?? input).trim();
+    if (!content || loading) return;
+
+    const next = [...messagesRef.current, { role: "user", content }];
     setMessages(next);
     setInput("");
+    finalRef.current = "";
     setLoading(true);
     setError("");
 
@@ -66,7 +217,7 @@ export default function AssistantPage() {
       const res = await fetch("/api/assistant", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ pin, messages: next }),
+        body: JSON.stringify({ pin: pinRef.current, messages: next }),
       });
       const data = await res.json();
 
@@ -77,20 +228,32 @@ export default function AssistantPage() {
       }
       if (!res.ok) {
         setError(data.error || "Something went wrong.");
+        reopenMicIfConvo();
         return;
       }
       setMessages([...next, { role: "assistant", content: data.text }]);
+      speak(data.text);
     } catch {
       setError("Couldn't reach the assistant. Please try again.");
+      reopenMicIfConvo();
     } finally {
       setLoading(false);
     }
   }
+  sendRef.current = sendMessage;
 
   function onKeyDown(e) {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      send();
+      sendMessage();
+    }
+  }
+
+  function onScrollAreaTap() {
+    // Tapping during playback interrupts and reopens the mic
+    if (speaking) {
+      stopAudio();
+      startListening();
     }
   }
 
@@ -105,9 +268,7 @@ export default function AssistantPage() {
     paddingBottom: "env(safe-area-inset-bottom)",
   };
 
-  if (!ready) {
-    return <div style={page} />;
-  }
+  if (!ready) return <div style={page} />;
 
   // --- Passcode gate ---
   if (!pin) {
@@ -174,28 +335,56 @@ export default function AssistantPage() {
           justifyContent: "space-between",
           padding: "16px 18px",
           borderBottom: `1px solid rgba(176,141,87,0.28)`,
+          gap: 12,
         }}
       >
-        <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20 }}>
+        <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, whiteSpace: "nowrap" }}>
           Jovie &amp; Co <span style={{ color: BRASS }}>Assistant</span>
         </span>
-        <button
-          onClick={clearPin}
-          style={{
-            background: "none",
-            border: "none",
-            color: BRASS,
-            fontSize: 11,
-            letterSpacing: "0.14em",
-            textTransform: "uppercase",
-            cursor: "pointer",
-          }}
-        >
-          Lock
-        </button>
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          {speechSupported && (
+            <button
+              onClick={() => setConvoMode((v) => !v)}
+              aria-pressed={convoMode}
+              style={{
+                background: convoMode ? BRASS : "transparent",
+                color: convoMode ? PLUM : BRASS,
+                border: `1px solid ${BRASS}`,
+                borderRadius: 999,
+                padding: "6px 12px",
+                fontSize: 10,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                fontWeight: 700,
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+              }}
+            >
+              Hands-free {convoMode ? "On" : "Off"}
+            </button>
+          )}
+          <button
+            onClick={clearPin}
+            style={{
+              background: "none",
+              border: "none",
+              color: BRASS,
+              fontSize: 11,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              cursor: "pointer",
+            }}
+          >
+            Lock
+          </button>
+        </div>
       </header>
 
-      <div ref={scrollRef} style={{ flex: 1, overflowY: "auto", padding: "20px 18px" }}>
+      <div
+        ref={scrollRef}
+        onClick={onScrollAreaTap}
+        style={{ flex: 1, overflowY: "auto", padding: "20px 18px", cursor: speaking ? "pointer" : "auto" }}
+      >
         {messages.length === 0 && (
           <p style={{ color: "rgba(242,237,230,0.5)", fontSize: 14, textAlign: "center", marginTop: 40 }}>
             Product copy, pricing, customer emails, site work — ask away.
@@ -242,6 +431,11 @@ export default function AssistantPage() {
             Thinking…
           </div>
         )}
+        {speaking && (
+          <p style={{ color: BRASS, fontSize: 12, letterSpacing: "0.12em", textTransform: "uppercase", marginTop: 8 }}>
+            Speaking — tap to interrupt
+          </p>
+        )}
         {error && <p style={{ color: "#e2a1a1", fontSize: 13, marginTop: 10 }}>{error}</p>}
       </div>
 
@@ -258,7 +452,7 @@ export default function AssistantPage() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={onKeyDown}
-          placeholder="Message the assistant…"
+          placeholder={listening ? "Listening…" : "Message the assistant…"}
           rows={1}
           style={{
             flex: 1,
@@ -273,8 +467,30 @@ export default function AssistantPage() {
             maxHeight: 140,
           }}
         />
+        {speechSupported && (
+          <button
+            onClick={toggleMic}
+            aria-label={listening ? "Stop and send" : "Start voice input"}
+            style={{
+              background: listening ? BRASS : "transparent",
+              border: `1px solid ${BRASS}`,
+              padding: "10px",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+            }}
+          >
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke={listening ? PLUM : BRASS} strokeWidth="1.7">
+              <rect x="9" y="3" width="6" height="12" rx="3" />
+              <path d="M5 11a7 7 0 0 0 14 0" />
+              <path d="M12 18v3" />
+            </svg>
+          </button>
+        )}
         <button
-          onClick={send}
+          onClick={() => sendMessage()}
           disabled={loading || !input.trim()}
           style={{
             background: BRASS,
@@ -287,6 +503,7 @@ export default function AssistantPage() {
             fontWeight: 700,
             cursor: loading || !input.trim() ? "default" : "pointer",
             opacity: loading || !input.trim() ? 0.5 : 1,
+            flexShrink: 0,
           }}
         >
           Send
