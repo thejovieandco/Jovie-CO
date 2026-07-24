@@ -258,12 +258,16 @@ export default function AssistantPage() {
   }
 
   const page = {
-    minHeight: "100dvh",
+    position: "fixed",
+    inset: 0,
+    zIndex: 1000,
+    height: "100dvh",
     background: PLUM,
     color: CREAM,
     fontFamily: "'Manrope', system-ui, sans-serif",
     display: "flex",
     flexDirection: "column",
+    overflow: "hidden",
     paddingTop: "env(safe-area-inset-top)",
     paddingBottom: "env(safe-area-inset-bottom)",
   };
@@ -326,20 +330,37 @@ export default function AssistantPage() {
   }
 
   // --- Chat ---
+  const orbState = listening ? "listening" : loading ? "thinking" : speaking ? "speaking" : "idle";
+  const SUGGESTIONS = [
+    "Write a product description for a gold clover necklace",
+    "Price a $12 piece at a 3x markup, after Stripe fees",
+    "Draft a warm email about a preorder shipping a week late",
+    "Three launch caption ideas for Instagram",
+  ];
+  function suggest(text) {
+    sendMessage(text);
+  }
+
   return (
     <div style={page}>
-      <header
+      <div
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           padding: "16px 18px",
           borderBottom: `1px solid rgba(176,141,87,0.28)`,
+          background: PLUM,
           gap: 12,
         }}
       >
-        <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, whiteSpace: "nowrap" }}>
-          Jovie &amp; Co <span style={{ color: BRASS }}>Assistant</span>
+        <span style={{ display: "flex", alignItems: "center", gap: 11, whiteSpace: "nowrap" }}>
+          <span className="assistant-orb" data-state={orbState} style={{ "--orb-size": "30px" }}>
+            <span className="orb-core" />
+          </span>
+          <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20 }}>
+            Jovie &amp; Co <span style={{ color: BRASS }}>Assistant</span>
+          </span>
         </span>
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
           {speechSupported && (
@@ -378,21 +399,52 @@ export default function AssistantPage() {
             Lock
           </button>
         </div>
-      </header>
+      </div>
 
       <div
         ref={scrollRef}
         onClick={onScrollAreaTap}
         style={{ flex: 1, overflowY: "auto", padding: "20px 18px", cursor: speaking ? "pointer" : "auto" }}
       >
-        {messages.length === 0 && (
-          <p style={{ color: "rgba(242,237,230,0.5)", fontSize: 14, textAlign: "center", marginTop: 40 }}>
-            Product copy, pricing, customer emails, site work — ask away.
-          </p>
+        {messages.length === 0 && !loading && (
+          <div style={{ textAlign: "center", paddingTop: "6vh" }}>
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: 26 }}>
+              <span className="assistant-orb" data-state={orbState} style={{ "--orb-size": "128px" }}>
+                <span className="orb-core" />
+              </span>
+            </div>
+            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 26, marginBottom: 8 }}>
+              How can I help?
+            </div>
+            <p style={{ color: "rgba(242,237,230,0.55)", fontSize: 14, maxWidth: 300, margin: "0 auto 30px", lineHeight: 1.6 }}>
+              Your studio assistant — product copy, pricing, customer emails, and site work.
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, maxWidth: 420, margin: "0 auto" }}>
+              {SUGGESTIONS.map((s) => (
+                <button
+                  key={s}
+                  onClick={() => suggest(s)}
+                  style={{
+                    background: "rgba(242,237,230,0.04)",
+                    border: "1px solid rgba(176,141,87,0.35)",
+                    color: CREAM,
+                    textAlign: "left",
+                    padding: "13px 15px",
+                    fontSize: 14,
+                    lineHeight: 1.4,
+                    cursor: "pointer",
+                    fontFamily: "inherit",
+                  }}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          </div>
         )}
         {messages.map((m, i) =>
           m.role === "user" ? (
-            <div key={i} style={{ display: "flex", justifyContent: "flex-end", margin: "14px 0" }}>
+            <div key={i} style={{ display: "flex", justifyContent: "flex-end", margin: "16px 0" }}>
               <div
                 style={{
                   background: BRASS,
@@ -409,26 +461,36 @@ export default function AssistantPage() {
               </div>
             </div>
           ) : (
-            <div
-              key={i}
-              style={{
-                borderLeft: `1px solid ${BRASS}`,
-                paddingLeft: 14,
-                margin: "14px 0",
-                maxWidth: "92%",
-                fontSize: 15,
-                lineHeight: 1.6,
-                whiteSpace: "pre-wrap",
-                color: CREAM,
-              }}
-            >
-              {m.content}
+            <div key={i} style={{ margin: "16px 0", maxWidth: "94%" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 7 }}>
+                <span className="assistant-orb orb-mini" style={{ "--orb-size": "22px" }}>
+                  <span className="orb-core" />
+                </span>
+                <span style={{ fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: BRASS, fontWeight: 600 }}>
+                  Jovie
+                </span>
+              </div>
+              <div
+                style={{
+                  borderLeft: `1px solid ${BRASS}`,
+                  paddingLeft: 14,
+                  fontSize: 15,
+                  lineHeight: 1.6,
+                  whiteSpace: "pre-wrap",
+                  color: CREAM,
+                }}
+              >
+                {m.content}
+              </div>
             </div>
           )
         )}
         {loading && (
-          <div style={{ borderLeft: `1px solid ${BRASS}`, paddingLeft: 14, margin: "14px 0", color: "rgba(242,237,230,0.5)", fontSize: 14 }}>
-            Thinking…
+          <div style={{ margin: "16px 0", display: "flex", alignItems: "center", gap: 10 }}>
+            <span className="assistant-orb" data-state="thinking" style={{ "--orb-size": "26px" }}>
+              <span className="orb-core" />
+            </span>
+            <span style={{ color: "rgba(242,237,230,0.55)", fontSize: 14 }}>Thinking…</span>
           </div>
         )}
         {speaking && (
