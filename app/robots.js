@@ -3,7 +3,7 @@ export default function robots() {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/cart", "/checkout/", "/account", "/api/"],
+      disallow: ["/cart", "/checkout/", "/account", "/assistant", "/api/"],
     },
     sitemap: "https://jovieandco.com/sitemap.xml",
   };

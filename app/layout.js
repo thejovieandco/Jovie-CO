@@ -35,6 +35,12 @@ export const metadata = {
       "Crafted today, treasured for generations. Preorder the founding collection.",
     images: ["/products/twisted-marquise-ring.jpeg"],
   },
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    title: "Jovie & Co Assistant",
+    statusBarStyle: "black-translucent",
+  },
 };
 
 export default function RootLayout({ children }) {
