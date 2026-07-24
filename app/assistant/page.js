@@ -77,6 +77,8 @@ export default function AssistantPage() {
         sendOnEndRef.current = false;
         const text = finalRef.current.trim();
         if (text) sendRef.current(text);
+        // Hands-free: heard only silence — keep the ear open
+        else if (convoRef.current) setTimeout(() => listenRef.current(), 300);
       }
     };
     rec.onerror = () => {
@@ -145,7 +147,12 @@ export default function AssistantPage() {
     finalRef.current = "";
     setInput("");
     setError("");
+    const handsFree = convoRef.current;
     try {
+      // Hands-free: recognition auto-ends on a pause so we can send
+      // without a second tap. Otherwise it stays on until tapped.
+      rec.continuous = !handsFree;
+      if (handsFree) sendOnEndRef.current = true;
       rec.start();
       setListening(true);
     } catch {}
@@ -161,6 +168,24 @@ export default function AssistantPage() {
       } catch {}
     } else {
       startListening();
+    }
+  }
+
+  function toggleConvo() {
+    const nextOn = !convoMode;
+    setConvoMode(nextOn);
+    convoRef.current = nextOn;
+    if (nextOn) {
+      // Turning hands-free on starts the conversation immediately —
+      // and the tap unlocks audio playback on iOS.
+      startListening();
+    } else {
+      sendOnEndRef.current = false;
+      try {
+        recognitionRef.current && recognitionRef.current.abort();
+      } catch {}
+      setListening(false);
+      stopAudio();
     }
   }
 
@@ -366,7 +391,7 @@ export default function AssistantPage() {
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
           {speechSupported && (
             <button
-              onClick={() => setConvoMode((v) => !v)}
+              onClick={toggleConvo}
               aria-pressed={convoMode}
               style={{
                 background: convoMode ? BRASS : "transparent",
@@ -382,7 +407,7 @@ export default function AssistantPage() {
                 whiteSpace: "nowrap",
               }}
             >
-              Hands-free {convoMode ? "On" : "Off"}
+              {convoMode ? "Talking — Tap to End" : "Just Talk"}
             </button>
           )}
           <button
