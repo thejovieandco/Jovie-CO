@@ -261,7 +261,6 @@ export default function AssistantPage() {
     position: "fixed",
     inset: 0,
     zIndex: 1000,
-    height: "100dvh",
     background: PLUM,
     color: CREAM,
     fontFamily: "'Manrope', system-ui, sans-serif",
@@ -270,6 +269,8 @@ export default function AssistantPage() {
     overflow: "hidden",
     paddingTop: "env(safe-area-inset-top)",
     paddingBottom: "env(safe-area-inset-bottom)",
+    paddingLeft: "env(safe-area-inset-left)",
+    paddingRight: "env(safe-area-inset-right)",
   };
 
   if (!ready) return <div style={page} />;
@@ -407,16 +408,16 @@ export default function AssistantPage() {
         style={{ flex: 1, overflowY: "auto", padding: "20px 18px", cursor: speaking ? "pointer" : "auto" }}
       >
         {messages.length === 0 && !loading && (
-          <div style={{ textAlign: "center", paddingTop: "6vh" }}>
-            <div style={{ display: "flex", justifyContent: "center", marginBottom: 26 }}>
-              <span className="assistant-orb" data-state={orbState} style={{ "--orb-size": "128px" }}>
+          <div style={{ textAlign: "center", paddingTop: "clamp(8px, 3vh, 34px)" }}>
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: "clamp(14px, 3vh, 26px)" }}>
+              <span className="assistant-orb" data-state={orbState} style={{ "--orb-size": "clamp(82px, 20vh, 128px)" }}>
                 <span className="orb-core" />
               </span>
             </div>
-            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 26, marginBottom: 8 }}>
+            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(22px, 5vw, 26px)", marginBottom: 8 }}>
               How can I help?
             </div>
-            <p style={{ color: "rgba(242,237,230,0.55)", fontSize: 14, maxWidth: 300, margin: "0 auto 30px", lineHeight: 1.6 }}>
+            <p style={{ color: "rgba(242,237,230,0.55)", fontSize: 14, maxWidth: 300, margin: "0 auto clamp(18px, 3.5vh, 30px)", lineHeight: 1.6 }}>
               Your studio assistant — product copy, pricing, customer emails, and site work.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 10, maxWidth: 420, margin: "0 auto" }}>
