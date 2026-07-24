@@ -4,6 +4,7 @@ import { CartProvider } from "../components/CartProvider";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import EmailPopup from "../components/EmailPopup";
+import ConciergeChat from "../components/ConciergeChat";
 import { clerkEnabled, clerkPublishableKey } from "../lib/clerk";
 
 export const metadata = {
@@ -54,6 +55,7 @@ export default function RootLayout({ children }) {
       {children}
       <Footer />
       <EmailPopup />
+      <ConciergeChat />
     </CartProvider>
   );
 
