@@ -367,6 +367,22 @@ export default function AssistantPage() {
     sendMessage(text);
   }
 
+  const callStatus = listening
+    ? "Listening"
+    : loading
+    ? "Thinking"
+    : speaking
+    ? "Speaking — tap to interrupt"
+    : "Tap to speak";
+  function handleCallTap() {
+    if (speaking) {
+      stopAudio();
+      startListening();
+    } else if (!listening && !loading) {
+      startListening();
+    }
+  }
+
   return (
     <div style={page}>
       <div
@@ -407,7 +423,7 @@ export default function AssistantPage() {
                 whiteSpace: "nowrap",
               }}
             >
-              {convoMode ? "Talking — Tap to End" : "Just Talk"}
+              {convoMode ? "End" : "Just Talk"}
             </button>
           )}
           <button
@@ -427,6 +443,31 @@ export default function AssistantPage() {
         </div>
       </div>
 
+      {convoMode ? (
+        <div
+          onClick={handleCallTap}
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 30,
+            padding: 24,
+            textAlign: "center",
+            cursor: "pointer",
+          }}
+        >
+          <span className="assistant-orb" data-state={orbState} style={{ "--orb-size": "clamp(140px, 40vw, 200px)" }}>
+            <span className="orb-core" />
+          </span>
+          <div style={{ fontSize: 13, letterSpacing: "0.2em", textTransform: "uppercase", color: BRASS, fontWeight: 600 }}>
+            {callStatus}
+          </div>
+          {error && <p style={{ color: "#e2a1a1", fontSize: 13 }}>{error}</p>}
+        </div>
+      ) : (
+        <>
       <div
         ref={scrollRef}
         onClick={onScrollAreaTap}
@@ -597,6 +638,8 @@ export default function AssistantPage() {
           Send
         </button>
       </div>
+        </>
+      )}
     </div>
   );
 }
