@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { products, getProductByHandle, formatPrice, PREORDER, PREORDER_SHIP_DATE } from "../../../lib/products";
-import AddToCartButton from "../../../components/AddToCartButton";
 import ProductViewer from "../../../components/ProductViewer";
+import PurchasePanel from "../../../components/PurchasePanel";
 
 export function generateStaticParams() {
   return products.map((p) => ({ handle: p.handle }));
@@ -42,19 +42,7 @@ export default function ProductPage({ params }) {
               Coming Soon — Available {PREORDER_SHIP_DATE}
             </p>
           ) : (
-            <>
-              {product.stock > 0 && product.stock <= 3 && (
-                <p style={{ fontSize: 13, color: "#A8823E", letterSpacing: "0.05em", textTransform: "uppercase", marginBottom: 14, fontWeight: 600 }}>
-                  {product.stock === 1 ? "Only 1 available" : `Only ${product.stock} available`}
-                </p>
-              )}
-              <AddToCartButton handle={product.handle} />
-              {PREORDER && (
-                <p style={{ fontSize: 13, color: "#A8823E", letterSpacing: "0.05em", textTransform: "uppercase", marginTop: 16 }}>
-                  Preorder — Ships {PREORDER_SHIP_DATE}
-                </p>
-              )}
-            </>
+            <PurchasePanel handle={product.handle} initial={product.stock ?? null} />
           )}
         </div>
       </div>

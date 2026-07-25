@@ -839,3 +839,5 @@ footer{background:var(--champagne); padding:70px 0 30px;}
   padding:11px 16px; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; font-weight:700; cursor:pointer;
 }
 .concierge-input button:disabled{ opacity:0.45; cursor:default; }
+
+.stock-note.is-out{color:#8a8880;}
