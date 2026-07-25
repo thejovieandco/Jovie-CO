@@ -841,3 +841,15 @@ footer{background:var(--champagne); padding:70px 0 30px;}
 .concierge-input button:disabled{ opacity:0.45; cursor:default; }
 
 .stock-note.is-out{color:#8a8880;}
+
+.order-status.s-shipped{border-color:rgba(26,26,26,0.35); color:var(--black);}
+.order-tracking{
+  display:flex; flex-direction:column; align-items:flex-end; gap:2px;
+  font-size:11px; letter-spacing:0.1em; text-transform:uppercase; font-weight:600;
+  color:var(--gold-dark); text-align:right; transition:color 0.25s ease;
+}
+.order-tracking span{
+  font-size:12px; letter-spacing:0.02em; text-transform:none; font-weight:400;
+  color:#6b6b66; font-variant-numeric:tabular-nums; word-break:break-all;
+}
+.order-tracking:hover{color:var(--black);}

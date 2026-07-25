@@ -146,6 +146,17 @@ function AccountDashboard() {
               <div className="order-right">
                 <span className="order-total">{formatPrice(order.total)}</span>
                 <span className={`order-status s-${order.status}`}>{order.statusLabel}</span>
+                {order.tracking && (
+                  <a
+                    className="order-tracking"
+                    href={order.tracking.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Track with {order.tracking.carrier}
+                    <span>{order.tracking.number}</span>
+                  </a>
+                )}
               </div>
             </div>
           ))}
