@@ -51,15 +51,18 @@ export async function POST(request) {
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items,
-      shipping_address_collection: { allowed_countries: ["US", "CA"] },
+      // US only — international rates are several times these, so shipping
+      // abroad at a domestic rate would lose money on every order.
+      shipping_address_collection: { allowed_countries: ["US"] },
       shipping_options: [
         {
           shipping_rate_data: {
             type: "fixed_amount",
             fixed_amount: { amount: standardAmount, currency: "usd" },
             display_name: standardAmount === 0 ? "Standard Shipping — Free" : "Standard Shipping",
+            // USPS Ground Advantage (2–5 business days) plus 1–3 days handling
             delivery_estimate: {
-              minimum: { unit: "business_day", value: 5 },
+              minimum: { unit: "business_day", value: 3 },
               maximum: { unit: "business_day", value: 8 },
             },
           },
@@ -67,11 +70,12 @@ export async function POST(request) {
         {
           shipping_rate_data: {
             type: "fixed_amount",
-            fixed_amount: { amount: 1495, currency: "usd" },
-            display_name: "Express Shipping",
+            fixed_amount: { amount: 1295, currency: "usd" },
+            display_name: "Priority Shipping",
+            // USPS Priority Mail (1–3 business days) plus 1–3 days handling
             delivery_estimate: {
               minimum: { unit: "business_day", value: 2 },
-              maximum: { unit: "business_day", value: 3 },
+              maximum: { unit: "business_day", value: 5 },
             },
           },
         },

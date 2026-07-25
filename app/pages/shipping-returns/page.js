@@ -38,22 +38,24 @@ export default function ShippingReturnsPage() {
               </thead>
               <tbody>
                 <tr>
-                  <td>Standard Shipping (US)</td>
-                  <td>5–8 business days</td>
-                  <td>$4.95 — free on orders over $50</td>
+                  <td>Standard (USPS Ground Advantage)</td>
+                  <td>3–8 business days</td>
+                  <td>$5.95 — free on orders $50 and over</td>
                 </tr>
                 <tr>
-                  <td>Expedited Shipping (US)</td>
-                  <td>2–3 business days</td>
+                  <td>Priority (USPS Priority Mail)</td>
+                  <td>2–5 business days</td>
                   <td>$12.95</td>
                 </tr>
               </tbody>
             </table>
           </div>
           <p>
-            Estimated delivery windows begin once your order ships, and don't include
-            processing time. During launches and holidays, processing may take a little
-            longer — we'll always note it at checkout.
+            The windows above include our 1–3 day processing time, so they reflect when
+            your piece should reach you — not just how long it spends in transit. Every
+            order ships tracked, and you'll get the tracking number by email. During
+            launches and holidays, processing may take a little longer — we'll always
+            note it at checkout.
           </p>
 
           <div className="info-note">

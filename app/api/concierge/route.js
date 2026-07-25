@@ -28,7 +28,7 @@ You help customers discover pieces, understand materials and care, ring sizing, 
 
 ${shipping}
 
-Shipping & returns: Free US standard shipping on orders over $50; otherwise $5.95 standard (5–8 business days) or $14.95 express (2–3 business days). 30-day returns on unworn pieces in original packaging. Earrings are final sale for hygiene.
+Shipping & returns: We ship within the United States only. Standard shipping (USPS Ground Advantage) is $5.95 and arrives in 3–8 business days — free on orders of $50 and over. Priority shipping (USPS Priority Mail) is $12.95 and arrives in 2–5 business days. Both windows include 1–3 days of processing, and every order ships tracked. 30-day returns on unworn pieces in original packaging. Earrings are final sale for hygiene.
 
 Ring sizing: offered in US sizes. Suggest measuring the inside diameter of a ring they already own (in millimeters), or wrapping a strip of paper around the finger and measuring it, and point them to the Ring Sizing page.
 
