@@ -1,6 +1,7 @@
 import Stripe from "stripe";
 import { NextResponse } from "next/server";
 import { getProductByHandle, PREORDER, PREORDER_SHIP_DATE } from "../../../lib/products";
+import { getRemainingStock } from "../../../lib/stock";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
   apiVersion: "2024-06-20",
@@ -21,10 +22,29 @@ export async function POST(request) {
       return NextResponse.json({ error: "Your bag is empty." }, { status: 400 });
     }
 
+    // Check live availability (starting stock minus everything already
+    // sold through Stripe) so a piece can never be sold twice.
+    const remaining = await getRemainingStock({ fresh: true });
+    const unavailable = [];
+    for (const { handle, quantity } of items) {
+      const product = getProductByHandle(handle);
+      if (!product || product.stock == null) continue;
+      const left = remaining[handle] ?? product.stock;
+      if (left <= 0) unavailable.push(`${product.name} is sold out`);
+      else if (quantity > left) unavailable.push(`Only ${left} left of ${product.name}`);
+    }
+    if (unavailable.length > 0) {
+      return NextResponse.json(
+        { error: `${unavailable.join(". ")}. Please update your bag.` },
+        { status: 409 }
+      );
+    }
+
     const line_items = items.map(({ handle, quantity }) => {
       const product = getProductByHandle(handle);
       if (!product) throw new Error(`Unknown product: ${handle}`);
-      const capped = product.stock != null ? Math.min(quantity, product.stock) : quantity;
+      const left = remaining[handle];
+      const capped = left != null ? Math.min(quantity, left) : quantity;
       return {
         quantity: capped,
         price_data: {

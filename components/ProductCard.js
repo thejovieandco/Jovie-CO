@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { formatPrice, PREORDER } from "../lib/products";
 import Tilt3D from "./Tilt3D";
+import StockNote from "./StockNote";
 
 export default function ProductCard({ product }) {
   return (
@@ -23,8 +24,8 @@ export default function ProductCard({ product }) {
       </Tilt3D>
       <div className="product-name">{product.name}</div>
       <div className="product-price">{formatPrice(product.price)}</div>
-      {product.stock > 0 && product.stock <= 3 && (
-        <div className="stock-note">Only {product.stock} left</div>
+      {product.stock != null && (
+        <StockNote handle={product.handle} initial={product.stock} />
       )}
     </Link>
   );
