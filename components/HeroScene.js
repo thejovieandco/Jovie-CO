@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import Tilt3D from "./Tilt3D";
 import { PREORDER, PREORDER_SHIP_DATE } from "../lib/products";
+import GemLight from "./GemLight";
 
 // Fixed positions so the server and client render the same particles.
 const SPARKS = [
@@ -35,6 +36,7 @@ export default function HeroScene() {
 
   return (
     <section className="hero hero-3d" ref={ref}>
+      <GemLight />
       <div className="hero-depth hero-depth-glow" aria-hidden="true" />
       <div className="hero-sparks" aria-hidden="true">
         {SPARKS.map((p, i) => (

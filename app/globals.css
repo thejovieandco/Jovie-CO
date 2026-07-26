@@ -938,3 +938,11 @@ footer{background:var(--champagne); padding:70px 0 30px;}
   .trust-row{grid-template-columns:1fr; gap:20px; margin-top:40px;}
   .faq-item summary{font-size:18px; padding:20px 2px;}
 }
+
+/* Refracted light behind the hero — sits above the base gradient,
+   below the headline and product card. */
+.gem-light{
+  position:absolute; inset:0; width:100%; height:100%;
+  z-index:1; pointer-events:none;
+  mix-blend-mode:screen; opacity:0.8;
+}
