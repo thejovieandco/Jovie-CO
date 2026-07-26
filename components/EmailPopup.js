@@ -103,9 +103,14 @@ export default function EmailPopup() {
         ) : (
           <>
             <form className="popup-form" onSubmit={handleSubmit}>
+              <label htmlFor="popup-email" className="visually-hidden">
+                Your email address
+              </label>
               <input
+                id="popup-email"
                 type="email"
                 name="email"
+                autoComplete="email"
                 placeholder="Your email address"
                 required
                 disabled={status === "loading"}

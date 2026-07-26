@@ -64,7 +64,7 @@ header{
 .account-toggle button{
   background:none; border:none; cursor:pointer;
   padding:12px 26px; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; font-weight:600;
-  color:#8a8880; transition:all 0.3s ease;
+  color:#6f6d66; transition:all 0.3s ease;
 }
 .account-toggle button.is-active{background:var(--black); color:var(--white);}
 .order-row{
@@ -248,7 +248,7 @@ header{
 .newsletter p{color:#bfbcb4; max-width:440px; margin:0 auto 32px;}
 .news-form{display:flex; max-width:420px; margin:0 auto; border-bottom:1px solid var(--gold);}
 .news-form input{flex:1; background:transparent; border:none; color:var(--white); font-size:14px; padding:14px 4px; outline:none;}
-.news-form input::placeholder{color:#8a8880;}
+.news-form input::placeholder{color:#6f6d66;}
 .news-form button{background:none; border:none; color:var(--gold); font-size:12px; letter-spacing:0.14em; text-transform:uppercase; cursor:pointer; padding:14px 8px; font-weight:600;}
 
 footer{background:var(--champagne); padding:70px 0 30px;}
@@ -537,7 +537,7 @@ footer{background:var(--champagne); padding:70px 0 30px;}
 .viewer-badge svg{width:13px; height:13px;}
 .viewer-hint{
   font-size:11px; letter-spacing:0.16em; text-transform:uppercase;
-  color:#8a8880; text-align:center; font-weight:600;
+  color:#6f6d66; text-align:center; font-weight:600;
 }
 .hint-mobile{display:none;}
 @media(hover:none){
@@ -599,7 +599,7 @@ footer{background:var(--champagne); padding:70px 0 30px;}
 .popup-close{
   position:absolute; top:10px; right:14px;
   background:none; border:none; font-size:26px; line-height:1;
-  color:#8a8880; cursor:pointer; padding:6px;
+  color:#6f6d66; cursor:pointer; padding:6px;
   transition:color 0.25s ease;
 }
 .popup-close:hover{color:var(--black);}
@@ -689,7 +689,7 @@ footer{background:var(--champagne); padding:70px 0 30px;}
 .info-figure figcaption{
   margin-top:12px; text-align:center;
   font-size:11px; letter-spacing:0.18em; text-transform:uppercase;
-  color:#8a8880; font-weight:600;
+  color:#6f6d66; font-weight:600;
 }
 
 /* --- Story page hero -------------------------------------------- */
@@ -840,7 +840,7 @@ footer{background:var(--champagne); padding:70px 0 30px;}
 }
 .concierge-input button:disabled{ opacity:0.45; cursor:default; }
 
-.stock-note.is-out{color:#8a8880;}
+.stock-note.is-out{color:#6f6d66;}
 
 .order-status.s-shipped{border-color:rgba(26,26,26,0.35); color:var(--black);}
 .order-tracking{
@@ -853,3 +853,41 @@ footer{background:var(--champagne); padding:70px 0 30px;}
   color:#6b6b66; font-variant-numeric:tabular-nums; word-break:break-all;
 }
 .order-tracking:hover{color:var(--black);}
+
+/* ============================================================
+   ACCESSIBILITY BASELINE
+   ============================================================ */
+
+/* Label text for screen readers only */
+.visually-hidden{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+
+/* Visible keyboard focus everywhere (mouse clicks stay unchanged) */
+:focus-visible{
+  outline:2px solid var(--gold-dark);
+  outline-offset:3px;
+}
+/* Gold reads on the dark newsletter, drawer and concierge header too */
+.newsletter :focus-visible,
+.concierge-head :focus-visible,
+.legacy-band :focus-visible{
+  outline-color:var(--gold);
+}
+
+/* Let keyboard users jump straight to the page content */
+.skip-link{
+  position:absolute; left:50%; top:-100px; transform:translateX(-50%);
+  z-index:300; background:var(--black); color:var(--white);
+  padding:12px 22px; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; font-weight:600;
+  transition:top 0.2s ease;
+}
+.skip-link:focus{top:8px;}
+
+/* Comfortable touch targets on the bag quantity controls */
+.cart-qty button{
+  width:44px; height:44px; font-size:16px; line-height:1;
+  display:flex; align-items:center; justify-content:center;
+}
+.cart-qty{gap:14px;}

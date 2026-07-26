@@ -51,8 +51,9 @@ export const viewport = {
 export default function RootLayout({ children }) {
   const content = (
     <CartProvider>
+      <a href="#main" className="skip-link">Skip to content</a>
       <Header />
-      {children}
+      <main id="main">{children}</main>
       <Footer />
       <EmailPopup />
       <ConciergeChat />

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
 const WELCOME =
-  "Welcome to Jovie & Co. I can help you find a piece, with sizing, shipping, or preorder timing. What are you looking for?";
+  "Welcome to Jovie & Co. I'm an AI assistant — I can help you find a piece, or with sizing, shipping, and preorder timing. For anything about an existing order, email thejovieandco@gmail.com and a person will reply.";
 const SUGGESTIONS = [
   "Help me choose a necklace",
   "How does ring sizing work?",
@@ -75,7 +75,7 @@ export default function ConciergeChat() {
           <div className="concierge-head">
             <div>
               <div className="t">Jovie &amp; Co</div>
-              <div className="s">Concierge</div>
+              <div className="s">AI Concierge</div>
             </div>
             <button className="concierge-close" onClick={() => setOpen(false)} aria-label="Close chat">
               ×
@@ -113,7 +113,11 @@ export default function ConciergeChat() {
           </div>
 
           <div className="concierge-input">
+            <label htmlFor="concierge-message" className="visually-hidden">
+              Message the Jovie &amp; Co AI concierge
+            </label>
             <textarea
+              id="concierge-message"
               rows={1}
               value={input}
               onChange={(e) => setInput(e.target.value)}
