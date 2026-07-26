@@ -38,7 +38,7 @@ export default function ProductPage({ params }) {
             {product.details.map((d, i) => <li key={i}>{d}</li>)}
           </ul>
           {product.comingSoon ? (
-            <p style={{ fontSize: 13, color: "#8a8880", letterSpacing: "0.05em", textTransform: "uppercase" }}>
+            <p style={{ fontSize: 13, color: "#6f6d66", letterSpacing: "0.05em", textTransform: "uppercase" }}>
               Coming Soon — Available {PREORDER_SHIP_DATE}
             </p>
           ) : (

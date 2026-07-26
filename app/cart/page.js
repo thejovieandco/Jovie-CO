@@ -97,7 +97,7 @@ export default function CartPage() {
             <span>{formatPrice(item.product.price * item.quantity)}</span>
             <button
               onClick={() => removeItem(item.handle)}
-              style={{ background: "none", border: "none", fontSize: 12, color: "#8a8880", cursor: "pointer" }}
+              style={{ background: "none", border: "none", fontSize: 12, color: "#6f6d66", cursor: "pointer" }}
             >
               Remove
             </button>
@@ -110,7 +110,7 @@ export default function CartPage() {
           <span>Subtotal</span>
           <span>{formatPrice(subtotal)}</span>
         </div>
-        <div className="cart-summary-row" style={{ color: "#8a8880" }}>
+        <div className="cart-summary-row" style={{ color: "#6f6d66" }}>
           <span>Shipping</span>
           <span>Calculated at checkout</span>
         </div>

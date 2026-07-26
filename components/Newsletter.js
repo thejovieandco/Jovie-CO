@@ -45,9 +45,14 @@ export default function Newsletter() {
         ) : (
           <>
             <form className="news-form" onSubmit={handleSubmit}>
+              <label htmlFor="newsletter-email" className="visually-hidden">
+                Your email address
+              </label>
               <input
+                id="newsletter-email"
                 type="email"
                 name="email"
+                autoComplete="email"
                 placeholder="Your email address"
                 required
                 disabled={status === "loading"}

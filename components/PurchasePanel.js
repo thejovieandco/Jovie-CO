@@ -20,7 +20,7 @@ export default function PurchasePanel({ handle, initial }) {
   if (soldOut) {
     return (
       <>
-        <p style={{ ...gold, color: "#8a8880", marginBottom: 10 }}>Sold out</p>
+        <p style={{ ...gold, color: "#6f6d66", marginBottom: 10 }}>Sold out</p>
         <p style={{ fontSize: 14, color: "#4a4a46", maxWidth: 420 }}>
           This piece has found its home. Write to us at{" "}
           <a href="mailto:thejovieandco@gmail.com" style={{ color: "#A8823E" }}>
