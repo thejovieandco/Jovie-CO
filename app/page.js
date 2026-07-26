@@ -6,6 +6,7 @@ import HeroScene from "../components/HeroScene";
 import Reveal from "../components/Reveal";
 import Tilt3D from "../components/Tilt3D";
 import Marquee from "../components/Marquee";
+import FAQ from "../components/FAQ";
 
 export default function Home() {
   const preview = products;
@@ -100,6 +101,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <FAQ />
 
       <section className="section" style={{ paddingBottom: 60 }}>
         <div className="container">
