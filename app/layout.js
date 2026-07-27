@@ -5,6 +5,8 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import EmailPopup from "../components/EmailPopup";
 import ConciergeChat from "../components/ConciergeChat";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { clerkEnabled, clerkPublishableKey } from "../lib/clerk";
 
 export const metadata = {
@@ -57,6 +59,9 @@ export default function RootLayout({ children }) {
       <Footer />
       <EmailPopup />
       <ConciergeChat />
+      {/* Traffic and performance, first-party and cookieless */}
+      <Analytics />
+      <SpeedInsights />
     </CartProvider>
   );
 
