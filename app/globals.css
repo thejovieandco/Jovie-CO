@@ -946,3 +946,19 @@ footer{background:var(--champagne); padding:70px 0 30px;}
   z-index:1; pointer-events:none;
   mix-blend-mode:screen; opacity:0.8;
 }
+
+/* Progress toward the free-shipping threshold, shown in the bag */
+.ship-progress{margin-bottom:22px;}
+.ship-progress p{
+  font-size:11px; letter-spacing:0.14em; text-transform:uppercase; font-weight:600;
+  color:var(--gold-dark); margin-bottom:8px;
+}
+.ship-progress p.is-earned{color:var(--black);}
+.ship-bar{height:2px; background:var(--line); overflow:hidden;}
+.ship-bar span{
+  display:block; height:100%; background:var(--gold);
+  transition:width 0.5s cubic-bezier(0.22,1,0.36,1);
+}
+@media(prefers-reduced-motion:reduce){.ship-bar span{transition:none;}}
+
+.related-section{border-top:1px solid var(--line); margin-top:40px;}

@@ -106,6 +106,24 @@ export default function CartPage() {
       ))}
 
       <div className="cart-summary">
+        {/* Threshold must match the free-shipping rule in /api/checkout */}
+        {(() => {
+          const threshold = 5000;
+          const away = threshold - subtotal;
+          const pct = Math.min(100, Math.round((subtotal / threshold) * 100));
+          return (
+            <div className="ship-progress">
+              <p className={away > 0 ? "" : "is-earned"}>
+                {away > 0
+                  ? `Add ${formatPrice(away)} for free US shipping`
+                  : "Your order ships free"}
+              </p>
+              <div className="ship-bar" role="presentation">
+                <span style={{ width: `${pct}%` }} />
+              </div>
+            </div>
+          );
+        })()}
         <div className="cart-summary-row">
           <span>Subtotal</span>
           <span>{formatPrice(subtotal)}</span>

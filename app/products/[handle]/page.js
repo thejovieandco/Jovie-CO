@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { products, getProductByHandle, formatPrice, PREORDER, PREORDER_SHIP_DATE } from "../../../lib/products";
 import ProductViewer from "../../../components/ProductViewer";
 import PurchasePanel from "../../../components/PurchasePanel";
+import RelatedProducts from "../../../components/RelatedProducts";
 
 export function generateStaticParams() {
   return products.map((p) => ({ handle: p.handle }));
@@ -46,6 +47,7 @@ export default function ProductPage({ params }) {
           )}
         </div>
       </div>
+      <RelatedProducts handle={product.handle} />
     </div>
   );
 }
