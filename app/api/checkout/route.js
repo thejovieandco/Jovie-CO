@@ -100,6 +100,17 @@ export async function POST(request) {
           },
         },
       ],
+      // Jewelry is often bought as a gift — collect the message at checkout
+      // so it can be hand-written on a card before the piece ships.
+      custom_fields: [
+        {
+          key: "gift_note",
+          label: { type: "custom", custom: "Gift note (optional)" },
+          type: "text",
+          optional: true,
+          text: { maximum_length: 200 },
+        },
+      ],
       success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/checkout/cancel`,
     });
