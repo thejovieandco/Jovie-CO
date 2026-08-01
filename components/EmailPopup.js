@@ -95,8 +95,8 @@ export default function EmailPopup() {
         <div className="popup-eyebrow">Jovie &amp; Co</div>
         <h3>Be Part of the Legacy</h3>
         <p>
-          Early access to new pieces, private sales, and first word when
-          preorders ship — straight to your inbox.
+          Early access to new pieces, private sales, and the story as it
+          unfolds — straight to your inbox.
         </p>
         {status === "done" ? (
           <p className="popup-success">{message}</p>

@@ -18,7 +18,7 @@ export const metadata = {
   openGraph: {
     title: "Jovie & Co | Jewelry Made to Be Passed Down",
     description:
-      "Crafted today, treasured for generations. Preorder the founding collection — eighteen pieces made to be kept.",
+      "Crafted today, treasured for generations. The founding collection is here — seventeen pieces made to be kept.",
     url: "https://jovieandco.com",
     siteName: "Jovie & Co",
     type: "website",
@@ -35,7 +35,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Jovie & Co | Jewelry Made to Be Passed Down",
     description:
-      "Crafted today, treasured for generations. Preorder the founding collection.",
+      "Crafted today, treasured for generations. The founding collection is here.",
     images: ["/products/twisted-marquise-ring.jpeg"],
   },
   manifest: "/manifest.webmanifest",
