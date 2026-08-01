@@ -4,11 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
 const WELCOME =
-  "Welcome to Jovie & Co. I'm an AI assistant — I can help you find a piece, or with sizing, shipping, and preorder timing. For anything about an existing order, email thejovieandco@gmail.com and a person will reply.";
+  "Welcome to Jovie & Co. I'm an AI assistant — I can help you find a piece, or with sizing, shipping, and delivery times. For anything about an existing order, email thejovieandco@gmail.com and a person will reply.";
 const SUGGESTIONS = [
   "Help me choose a necklace",
   "How does ring sizing work?",
-  "When do preorders ship?",
+  "How quickly will my order arrive?",
 ];
 
 export default function ConciergeChat() {

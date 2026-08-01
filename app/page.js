@@ -24,7 +24,7 @@ export default function Home() {
               <div className="eyebrow">{PREORDER ? "Preorder Now" : "Now Available"}</div>
               <h2>The Founding Collection</h2>
               <p>
-                Eighteen pieces, each made to be kept.
+                Seventeen pieces, each made to be kept.
                 {PREORDER
                   ? ` Reserve yours today — every preorder ships ${PREORDER_SHIP_DATE}.`
                   : " Each ready to begin its story with you."}
