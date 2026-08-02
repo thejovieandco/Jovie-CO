@@ -1,7 +1,7 @@
 import Stripe from "stripe";
 import { NextResponse } from "next/server";
 import { getProductByHandle, PREORDER, PREORDER_SHIP_DATE } from "../../../lib/products";
-import { getRemainingStock } from "../../../lib/stock";
+import { getRemainingStock, encodeItemsMetadata } from "../../../lib/stock";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
   apiVersion: "2024-06-20",
@@ -71,6 +71,9 @@ export async function POST(request) {
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items,
+      // Record exactly which pieces were bought so inventory can be counted
+      // without depending on matching product names later.
+      metadata: { items: encodeItemsMetadata(items) },
       // US only — international rates are several times these, so shipping
       // abroad at a domestic rate would lose money on every order.
       shipping_address_collection: { allowed_countries: ["US"] },
