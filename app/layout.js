@@ -1,5 +1,4 @@
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
 import { CartProvider } from "../components/CartProvider";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -7,7 +6,6 @@ import EmailPopup from "../components/EmailPopup";
 import ConciergeChat from "../components/ConciergeChat";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { clerkEnabled, clerkPublishableKey } from "../lib/clerk";
 
 export const metadata = {
   metadataBase: new URL("https://jovieandco.com"),
@@ -50,29 +48,24 @@ export const viewport = {
   viewportFit: "cover",
 };
 
+// Clerk is deliberately NOT mounted here. It lives inside app/account/page.js
+// so an auth outage can only ever affect that one page, never browsing or
+// checkout.
 export default function RootLayout({ children }) {
-  const content = (
-    <CartProvider>
-      <a href="#main" className="skip-link">Skip to content</a>
-      <Header />
-      <main id="main">{children}</main>
-      <Footer />
-      <EmailPopup />
-      <ConciergeChat />
-      {/* Traffic and performance, first-party and cookieless */}
-      <Analytics />
-      <SpeedInsights />
-    </CartProvider>
-  );
-
   return (
     <html lang="en">
       <body>
-        {clerkEnabled ? (
-          <ClerkProvider publishableKey={clerkPublishableKey}>{content}</ClerkProvider>
-        ) : (
-          content
-        )}
+        <CartProvider>
+          <a href="#main" className="skip-link">Skip to content</a>
+          <Header />
+          <main id="main">{children}</main>
+          <Footer />
+          <EmailPopup />
+          <ConciergeChat />
+          {/* Traffic and performance, first-party and cookieless */}
+          <Analytics />
+          <SpeedInsights />
+        </CartProvider>
       </body>
     </html>
   );

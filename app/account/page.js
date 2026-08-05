@@ -2,9 +2,17 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { SignedIn, SignedOut, SignIn, SignUp, UserButton, useUser } from "@clerk/nextjs";
+import {
+  ClerkProvider,
+  SignedIn,
+  SignedOut,
+  SignIn,
+  SignUp,
+  UserButton,
+  useUser,
+} from "@clerk/nextjs";
 import { formatPrice } from "../../lib/products";
-import { clerkEnabled } from "../../lib/clerk";
+import { clerkEnabled, clerkPublishableKey } from "../../lib/clerk";
 
 // Match the Clerk widgets to the Jovie & Co look
 const clerkAppearance = {
@@ -37,7 +45,13 @@ export default function AccountPage() {
     );
   }
 
-  return <AccountInner />;
+  // Clerk is mounted here rather than in the root layout, so a problem with
+  // it can only ever affect this page — never browsing or checkout.
+  return (
+    <ClerkProvider publishableKey={clerkPublishableKey}>
+      <AccountInner />
+    </ClerkProvider>
+  );
 }
 
 function AccountInner() {
