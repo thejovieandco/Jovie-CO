@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
 const PLUM = "#1A1418";
 const BRASS = "#B08D57";
@@ -426,6 +427,19 @@ export default function AssistantPage() {
               {convoMode ? "End" : "Just Talk"}
             </button>
           )}
+          <Link
+            href="/sales"
+            style={{
+              color: BRASS,
+              fontSize: 11,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              textDecoration: "none",
+              whiteSpace: "nowrap",
+            }}
+          >
+            Sales
+          </Link>
           <button
             onClick={clearPin}
             style={{
