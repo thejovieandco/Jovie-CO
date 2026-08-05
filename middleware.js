@@ -1,16 +1,34 @@
 import { clerkMiddleware } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 import { clerkEnabled, clerkPublishableKey } from "./lib/clerk";
 
-// Clerk only activates once a valid-looking publishable key exists.
-// Without one the middleware is a no-op and the site runs as before.
-export default clerkEnabled
-  ? clerkMiddleware({ publishableKey: clerkPublishableKey })
-  : function middleware() {};
+// Auth is only needed where a signed-in user is read: the account page and
+// the orders API. Keeping the storefront out of the matcher means a problem
+// with Clerk can never take down browsing or checkout.
+
+const passThrough = () => NextResponse.next();
+
+function guardedClerk() {
+  let handler;
+  try {
+    handler = clerkMiddleware({ publishableKey: clerkPublishableKey });
+  } catch (err) {
+    console.error("Clerk middleware failed to initialise:", err);
+    return passThrough;
+  }
+  return async function middleware(request, event) {
+    try {
+      return await handler(request, event);
+    } catch (err) {
+      // Degrade to signed-out rather than erroring the request
+      console.error("Clerk middleware error:", err);
+      return NextResponse.next();
+    }
+  };
+}
+
+export default clerkEnabled ? guardedClerk() : passThrough;
 
 export const config = {
-  matcher: [
-    // Skip Next.js internals and static files
-    "/((?!_next|.*\\.(?:jpg|jpeg|png|webp|gif|svg|ico|css|js|woff2?)).*)",
-    "/(api|trpc)(.*)",
-  ],
+  matcher: ["/account/:path*", "/api/orders/:path*"],
 };
