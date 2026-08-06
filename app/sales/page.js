@@ -252,6 +252,9 @@ export default function SalesPage() {
         {report && t.orders > 0 && (
           <>
             <Row>
+              {t.profit != null && (
+                <Stat label="Profit" value={money(t.profit)} big hint="After cost and fees" />
+              )}
               <Stat label="Net payout" value={money(t.net)} big hint="After Stripe fees" />
               <Stat label="Gross revenue" value={money(t.gross)} big />
               <Stat label="Orders" value={String(t.orders)} big />
@@ -296,6 +299,103 @@ export default function SalesPage() {
                   }}
                 />
               </div>
+            </Section>
+
+            <Section title="Reorder planner">
+              {report.reorder.length === 0 ? (
+                <p style={{ color: MUTED, fontSize: 14, lineHeight: 1.7 }}>
+                  Nothing to reorder yet. Pieces appear here once they sell out
+                  or come down to their last one — proven demand, rather than a
+                  guess about what might sell.
+                </p>
+              ) : (
+                <>
+                  <p style={{ color: MUTED, fontSize: 13, lineHeight: 1.7, marginBottom: 16 }}>
+                    Only pieces someone has actually paid for. Suggested quantity
+                    replaces what sold.
+                  </p>
+                  {report.reorder.map((p) => (
+                    <div key={p.handle} style={{ ...listRow, alignItems: "flex-start" }}>
+                      <span style={{ minWidth: 0 }}>
+                        <span style={{ display: "block", fontSize: 15 }}>{p.name}</span>
+                        <span style={{ fontSize: 12, color: MUTED, display: "block", marginTop: 3 }}>
+                          {p.sold} sold · {money(p.revenue)} earned
+                        </span>
+                        <span
+                          style={{
+                            display: "inline-block",
+                            marginTop: 6,
+                            fontSize: 10,
+                            letterSpacing: "0.14em",
+                            textTransform: "uppercase",
+                            fontWeight: 700,
+                            color: p.urgency === "out" ? PLUM : BRASS,
+                            background: p.urgency === "out" ? BRASS : "transparent",
+                            border: `1px solid ${BRASS}`,
+                            padding: "3px 8px",
+                          }}
+                        >
+                          {p.urgency === "out" ? "Sold out" : "Last one"}
+                        </span>
+                      </span>
+                      <span style={{ textAlign: "right", flexShrink: 0 }}>
+                        <span style={{ display: "block", fontSize: 15 }}>
+                          Order {p.suggested}
+                        </span>
+                        {p.restockCost != null ? (
+                          <>
+                            <span style={{ fontSize: 12, color: MUTED, display: "block" }}>
+                              costs {money(p.restockCost)}
+                            </span>
+                            <span style={{ fontSize: 12, color: BRASS, display: "block" }}>
+                              +{money(p.restockProfit)} profit
+                            </span>
+                          </>
+                        ) : (
+                          <span style={{ fontSize: 12, color: MUTED, display: "block" }}>
+                            {money(p.restockReturn)} at retail
+                          </span>
+                        )}
+                      </span>
+                    </div>
+                  ))}
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      gap: 16,
+                      paddingTop: 14,
+                      fontSize: 15,
+                    }}
+                  >
+                    <span style={{ color: BRASS, letterSpacing: "0.04em" }}>
+                      {report.reorderTotals.pieces} pieces
+                    </span>
+                    <span style={{ textAlign: "right" }}>
+                      {report.reorderTotals.cost != null ? (
+                        <>
+                          <span style={{ display: "block" }}>
+                            {money(report.reorderTotals.cost)} to restock
+                          </span>
+                          <span style={{ fontSize: 12, color: BRASS }}>
+                            returns {money(report.reorderTotals.value)} ·{" "}
+                            {money(report.reorderTotals.profit)} profit
+                          </span>
+                        </>
+                      ) : (
+                        <span>{money(report.reorderTotals.value)} at retail</span>
+                      )}
+                    </span>
+                  </div>
+                </>
+              )}
+              {!report.totals.costsKnown && (
+                <p style={{ color: MUTED, fontSize: 12, lineHeight: 1.7, marginTop: 18 }}>
+                  Add what you paid per piece in <code>lib/costs.js</code> and this
+                  planner will show restock cost and real profit instead of retail
+                  value.
+                </p>
+              )}
             </Section>
 
             {report.bestSellers.length > 0 && (
@@ -381,8 +481,10 @@ export default function SalesPage() {
 
             <p style={{ color: MUTED, fontSize: 12, marginTop: 34, lineHeight: 1.7 }}>
               Live from Stripe as of {when(report.generatedAt)}. Net is what Stripe
-              pays out after processing fees — it does not subtract what you paid
-              your supplier, so it is revenue, not profit.
+              pays out after processing fees.{" "}
+              {t.profit == null
+                ? "It does not subtract what you paid your supplier, so it is revenue, not profit — fill in lib/costs.js to see profit."
+                : "Profit also subtracts what you paid your supplier."}
             </p>
           </>
         )}
