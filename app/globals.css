@@ -962,3 +962,15 @@ footer{background:var(--champagne); padding:70px 0 30px;}
 @media(prefers-reduced-motion:reduce){.ship-bar span{transition:none;}}
 
 .related-section{border-top:1px solid var(--line); margin-top:40px;}
+
+/* --- Next collection announcement ----------------------------- */
+.next-collection-actions{
+  display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top:34px;
+}
+/* Outline button reversed for the dark band */
+.next-collection .btn-outline.next-collection-alt{
+  color:var(--white); border-color:rgba(199,161,90,0.65);
+}
+.next-collection .btn-outline.next-collection-alt:hover{
+  background:var(--gold); color:var(--black); border-color:var(--gold);
+}

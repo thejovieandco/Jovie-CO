@@ -1,45 +1,24 @@
 import Link from "next/link";
-import { products, PREORDER, PREORDER_SHIP_DATE } from "../lib/products";
-import ProductCard from "../components/ProductCard";
+import { products, NEXT_COLLECTION } from "../lib/products";
 import Newsletter from "../components/Newsletter";
 import HeroScene from "../components/HeroScene";
 import Reveal from "../components/Reveal";
 import Tilt3D from "../components/Tilt3D";
 import Marquee from "../components/Marquee";
 import FAQ from "../components/FAQ";
+import FinalPieces from "../components/FinalPieces";
+import NextCollection from "../components/NextCollection";
 
 export default function Home() {
-  const preview = products;
-
   return (
     <>
       <HeroScene />
 
       <Marquee />
 
-      <section className="section" id="preview">
-        <div className="container">
-          <Reveal>
-            <div className="section-head">
-              <div className="eyebrow">{PREORDER ? "Preorder Now" : "Now Available"}</div>
-              <h2>The Founding Collection</h2>
-              <p>
-                Seventeen pieces, each made to be kept.
-                {PREORDER
-                  ? ` Reserve yours today — every preorder ships ${PREORDER_SHIP_DATE}.`
-                  : " Each ready to begin its story with you."}
-              </p>
-            </div>
-          </Reveal>
-          <div className="grid-4">
-            {preview.map((p, i) => (
-              <Reveal key={p.handle} delay={(i % 4) * 90}>
-                <ProductCard product={p} />
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FinalPieces products={products} />
+
+      {NEXT_COLLECTION && <NextCollection />}
 
       <div className="diamond-divider">
         <span className="line"></span>
