@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { products, NEXT_COLLECTION } from "../lib/products";
+import { foundingProducts, nextProducts, NEXT_COLLECTION } from "../lib/products";
 import Newsletter from "../components/Newsletter";
 import HeroScene from "../components/HeroScene";
 import Reveal from "../components/Reveal";
@@ -16,9 +16,9 @@ export default function Home() {
 
       <Marquee />
 
-      <FinalPieces products={products} />
+      <FinalPieces products={foundingProducts} />
 
-      {NEXT_COLLECTION && <NextCollection />}
+      {NEXT_COLLECTION && <NextCollection products={nextProducts} />}
 
       <div className="diamond-divider">
         <span className="line"></span>

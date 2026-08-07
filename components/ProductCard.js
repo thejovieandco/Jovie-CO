@@ -24,7 +24,8 @@ export default function ProductCard({ product }) {
       </Tilt3D>
       <div className="product-name">{product.name}</div>
       <div className="product-price">{formatPrice(product.price)}</div>
-      {product.stock != null && (
+      {/* A piece that hasn't arrived can't be running low */}
+      {product.stock != null && !product.comingSoon && (
         <StockNote handle={product.handle} initial={product.stock} />
       )}
     </Link>
