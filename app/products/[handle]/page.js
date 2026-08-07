@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { products, getProductByHandle, formatPrice, PREORDER, PREORDER_SHIP_DATE } from "../../../lib/products";
+import { products, getProductByHandle, formatPrice, NEXT_COLLECTION_DATES } from "../../../lib/products";
 import ProductViewer from "../../../components/ProductViewer";
 import PurchasePanel from "../../../components/PurchasePanel";
 import RelatedProducts from "../../../components/RelatedProducts";
@@ -40,7 +40,7 @@ export default function ProductPage({ params }) {
           </ul>
           {product.comingSoon ? (
             <p style={{ fontSize: 13, color: "#6f6d66", letterSpacing: "0.05em", textTransform: "uppercase" }}>
-              Coming Soon — Available {PREORDER_SHIP_DATE}
+              Coming Soon — Arriving {NEXT_COLLECTION_DATES}
             </p>
           ) : (
             <PurchasePanel handle={product.handle} initial={product.stock ?? null} />

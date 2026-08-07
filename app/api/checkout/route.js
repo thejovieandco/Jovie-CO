@@ -28,6 +28,12 @@ export async function POST(request) {
     const unavailable = [];
     for (const { handle, quantity } of items) {
       const product = getProductByHandle(handle);
+      // Not in hand yet — the storefront hides these, but nothing stops a
+      // request being sent directly, and it must not sell what cannot ship.
+      if (product?.comingSoon) {
+        unavailable.push(`${product.name} hasn't arrived yet`);
+        continue;
+      }
       if (!product || product.stock == null) continue;
       const left = remaining[handle] ?? product.stock;
       if (left <= 0) unavailable.push(`${product.name} is sold out`);

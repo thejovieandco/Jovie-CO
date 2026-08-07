@@ -974,3 +974,6 @@ footer{background:var(--champagne); padding:70px 0 30px;}
 .next-collection .btn-outline.next-collection-alt:hover{
   background:var(--gold); color:var(--black); border-color:var(--gold);
 }
+/* Card text sits on the dark band in the next-collection grid */
+.next-collection .product-name{color:var(--white);}
+.next-collection .product-price{color:rgba(250,250,248,0.72);}
