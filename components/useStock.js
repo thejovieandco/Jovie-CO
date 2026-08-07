@@ -15,6 +15,24 @@ function loadStock() {
   return pending;
 }
 
+// The whole { handle: unitsLeft } map, or null until it arrives. Shares the
+// same single request as useStock, so asking for both costs nothing extra.
+export function useAllStock() {
+  const [remaining, setRemaining] = useState(null);
+
+  useEffect(() => {
+    let active = true;
+    loadStock().then((data) => {
+      if (active) setRemaining(data || {});
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  return remaining;
+}
+
 // Returns live units left for a handle, or the fallback until it loads.
 export function useStock(handle, fallback) {
   const [left, setLeft] = useState(fallback);

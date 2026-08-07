@@ -35,7 +35,7 @@ export default function Newsletter() {
   }
 
   return (
-    <section className="newsletter">
+    <section className="newsletter" id="newsletter">
       <div className="container">
         <div className="eyebrow">Stay Connected</div>
         <h2>Be Part of the Legacy</h2>
